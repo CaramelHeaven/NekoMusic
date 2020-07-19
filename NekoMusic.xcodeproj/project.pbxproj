@@ -3,19 +3,55 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EBF23CE11B74F401619E0E65 /* Pods_NekoMusic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42C9C45CE95167F0C242BA66 /* Pods_NekoMusic.framework */; };
 		FB2FE73824C48DBA0091F470 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2FE73724C48DBA0091F470 /* AppDelegate.swift */; };
 		FB2FE73A24C48DBA0091F470 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2FE73924C48DBA0091F470 /* SceneDelegate.swift */; };
 		FB2FE73C24C48DBA0091F470 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2FE73B24C48DBA0091F470 /* ContentView.swift */; };
 		FB2FE73E24C48DBC0091F470 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB2FE73D24C48DBC0091F470 /* Assets.xcassets */; };
 		FB2FE74124C48DBC0091F470 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB2FE74024C48DBC0091F470 /* Preview Assets.xcassets */; };
 		FB2FE74424C48DBC0091F470 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB2FE74224C48DBC0091F470 /* LaunchScreen.storyboard */; };
+		FB2FE74D24C48E0D0091F470 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FB2FE74C24C48E0D0091F470 /* GoogleService-Info.plist */; };
+		FB2FE75224C491570091F470 /* SignInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB2FE75024C491570091F470 /* SignInViewController.xib */; };
+		FB2FE75324C491570091F470 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2FE75124C491570091F470 /* SignInViewController.swift */; };
+		FB2FE75A24C4917B0091F470 /* UserPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2FE75524C4917B0091F470 /* UserPreferences.swift */; };
+		FB2FE75B24C4917B0091F470 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2FE75624C4917B0091F470 /* Database.swift */; };
+		FB2FE75C24C4917B0091F470 /* MusicPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2FE75724C4917B0091F470 /* MusicPlayer.swift */; };
+		FB2FE75D24C4917B0091F470 /* DiskStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2FE75824C4917B0091F470 /* DiskStorage.swift */; };
+		FB2FE75E24C4917B0091F470 /* GoogleDrive.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2FE75924C4917B0091F470 /* GoogleDrive.swift */; };
+		FB2FE76124C4919A0091F470 /* UrlRequestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2FE76024C4919A0091F470 /* UrlRequestable.swift */; };
+		FB2FE76424C491A30091F470 /* AsyncOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2FE76224C491A20091F470 /* AsyncOperation.swift */; };
+		FB2FE76524C491A30091F470 /* DownloadFileOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2FE76324C491A30091F470 /* DownloadFileOperation.swift */; };
+		FB2FE76824C491BB0091F470 /* GoogleFileList.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2FE76624C491BB0091F470 /* GoogleFileList.swift */; };
+		FB2FE76924C491BB0091F470 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2FE76724C491BB0091F470 /* Models.swift */; };
+		FB2FE76C24C491E70091F470 /* DI Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2FE76B24C491E70091F470 /* DI Container.swift */; };
+		FB2FE77124C492020091F470 /* Colors+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2FE76D24C492020091F470 /* Colors+Ex.swift */; };
+		FB2FE77224C492020091F470 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2FE76E24C492020091F470 /* Extensions.swift */; };
+		FB2FE77324C492020091F470 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2FE76F24C492020091F470 /* PageViewController.swift */; };
+		FB2FE77424C492020091F470 /* SwiftUI+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2FE77024C492020091F470 /* SwiftUI+Ex.swift */; };
+		FB2FE77724C4920B0091F470 /* UserSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2FE77524C4920B0091F470 /* UserSession.swift */; };
+		FB2FE77824C4920B0091F470 /* Publishers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2FE77624C4920B0091F470 /* Publishers.swift */; };
+		FB2FE77C24C492400091F470 /* FilesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2FE77A24C492400091F470 /* FilesView.swift */; };
+		FB2FE77D24C492400091F470 /* FilesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2FE77B24C492400091F470 /* FilesViewModel.swift */; };
+		FB2FE78424C4927C0091F470 /* TrackListScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2FE78124C4927C0091F470 /* TrackListScreen.swift */; };
+		FB2FE78524C4927C0091F470 /* TrackListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2FE78224C4927C0091F470 /* TrackListViewModel.swift */; };
+		FB2FE78624C4927C0091F470 /* BottomMusicControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2FE78324C4927C0091F470 /* BottomMusicControlView.swift */; };
+		FB2FE78924C4928C0091F470 /* PlaylistsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2FE78724C4928C0091F470 /* PlaylistsViewModel.swift */; };
+		FB2FE78A24C4928C0091F470 /* PlaylistsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2FE78824C4928C0091F470 /* PlaylistsScreen.swift */; };
+		FB2FE78D24C492950091F470 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2FE78B24C492950091F470 /* SettingsViewModel.swift */; };
+		FB2FE78E24C492950091F470 /* SettingsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2FE78C24C492950091F470 /* SettingsScreen.swift */; };
+		FB2FE79224C492A70091F470 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2FE79024C492A70091F470 /* MainView.swift */; };
+		FB2FE79324C492A70091F470 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2FE79124C492A70091F470 /* MainViewModel.swift */; };
+		FB2FE79524C492BD0091F470 /* TrackListKnot.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2FE79424C492BD0091F470 /* TrackListKnot.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		41A707B976B10762D04DD6BE /* Pods-NekoMusic.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NekoMusic.release.xcconfig"; path = "Target Support Files/Pods-NekoMusic/Pods-NekoMusic.release.xcconfig"; sourceTree = "<group>"; };
+		42C9C45CE95167F0C242BA66 /* Pods_NekoMusic.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NekoMusic.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AAB1E5AD1FE7D03A86D4DB45 /* Pods-NekoMusic.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NekoMusic.debug.xcconfig"; path = "Target Support Files/Pods-NekoMusic/Pods-NekoMusic.debug.xcconfig"; sourceTree = "<group>"; };
 		FB2FE73424C48DBA0091F470 /* NekoMusic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NekoMusic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB2FE73724C48DBA0091F470 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FB2FE73924C48DBA0091F470 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -24,6 +60,38 @@
 		FB2FE74024C48DBC0091F470 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		FB2FE74324C48DBC0091F470 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FB2FE74524C48DBC0091F470 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FB2FE74C24C48E0D0091F470 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		FB2FE75024C491570091F470 /* SignInViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignInViewController.xib; sourceTree = "<group>"; };
+		FB2FE75124C491570091F470 /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
+		FB2FE75524C4917B0091F470 /* UserPreferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserPreferences.swift; sourceTree = "<group>"; };
+		FB2FE75624C4917B0091F470 /* Database.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
+		FB2FE75724C4917B0091F470 /* MusicPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicPlayer.swift; sourceTree = "<group>"; };
+		FB2FE75824C4917B0091F470 /* DiskStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiskStorage.swift; sourceTree = "<group>"; };
+		FB2FE75924C4917B0091F470 /* GoogleDrive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleDrive.swift; sourceTree = "<group>"; };
+		FB2FE76024C4919A0091F470 /* UrlRequestable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UrlRequestable.swift; sourceTree = "<group>"; };
+		FB2FE76224C491A20091F470 /* AsyncOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsyncOperation.swift; sourceTree = "<group>"; };
+		FB2FE76324C491A30091F470 /* DownloadFileOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadFileOperation.swift; sourceTree = "<group>"; };
+		FB2FE76624C491BB0091F470 /* GoogleFileList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleFileList.swift; sourceTree = "<group>"; };
+		FB2FE76724C491BB0091F470 /* Models.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		FB2FE76B24C491E70091F470 /* DI Container.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DI Container.swift"; sourceTree = "<group>"; };
+		FB2FE76D24C492020091F470 /* Colors+Ex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Colors+Ex.swift"; sourceTree = "<group>"; };
+		FB2FE76E24C492020091F470 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		FB2FE76F24C492020091F470 /* PageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
+		FB2FE77024C492020091F470 /* SwiftUI+Ex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SwiftUI+Ex.swift"; sourceTree = "<group>"; };
+		FB2FE77524C4920B0091F470 /* UserSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSession.swift; sourceTree = "<group>"; };
+		FB2FE77624C4920B0091F470 /* Publishers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Publishers.swift; sourceTree = "<group>"; };
+		FB2FE77A24C492400091F470 /* FilesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilesView.swift; sourceTree = "<group>"; };
+		FB2FE77B24C492400091F470 /* FilesViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilesViewModel.swift; sourceTree = "<group>"; };
+		FB2FE78124C4927C0091F470 /* TrackListScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackListScreen.swift; sourceTree = "<group>"; };
+		FB2FE78224C4927C0091F470 /* TrackListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackListViewModel.swift; sourceTree = "<group>"; };
+		FB2FE78324C4927C0091F470 /* BottomMusicControlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BottomMusicControlView.swift; sourceTree = "<group>"; };
+		FB2FE78724C4928C0091F470 /* PlaylistsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistsViewModel.swift; sourceTree = "<group>"; };
+		FB2FE78824C4928C0091F470 /* PlaylistsScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistsScreen.swift; sourceTree = "<group>"; };
+		FB2FE78B24C492950091F470 /* SettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		FB2FE78C24C492950091F470 /* SettingsScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsScreen.swift; sourceTree = "<group>"; };
+		FB2FE79024C492A70091F470 /* MainView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		FB2FE79124C492A70091F470 /* MainViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		FB2FE79424C492BD0091F470 /* TrackListKnot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackListKnot.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +99,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EBF23CE11B74F401619E0E65 /* Pods_NekoMusic.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7AC871505C38FE30253ADFAB /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				AAB1E5AD1FE7D03A86D4DB45 /* Pods-NekoMusic.debug.xcconfig */,
+				41A707B976B10762D04DD6BE /* Pods-NekoMusic.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		BDCFBD03E06247DB22EA241D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				42C9C45CE95167F0C242BA66 /* Pods_NekoMusic.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		FB2FE72B24C48DBA0091F470 = {
 			isa = PBXGroup;
 			children = (
 				FB2FE73624C48DBA0091F470 /* NekoMusic */,
 				FB2FE73524C48DBA0091F470 /* Products */,
+				7AC871505C38FE30253ADFAB /* Pods */,
+				BDCFBD03E06247DB22EA241D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -56,9 +144,8 @@
 		FB2FE73624C48DBA0091F470 /* NekoMusic */ = {
 			isa = PBXGroup;
 			children = (
-				FB2FE73724C48DBA0091F470 /* AppDelegate.swift */,
-				FB2FE73924C48DBA0091F470 /* SceneDelegate.swift */,
-				FB2FE73B24C48DBA0091F470 /* ContentView.swift */,
+				FB2FE74B24C48DED0091F470 /* App */,
+				FB2FE74C24C48E0D0091F470 /* GoogleService-Info.plist */,
 				FB2FE73D24C48DBC0091F470 /* Assets.xcassets */,
 				FB2FE74224C48DBC0091F470 /* LaunchScreen.storyboard */,
 				FB2FE74524C48DBC0091F470 /* Info.plist */,
@@ -75,6 +162,127 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		FB2FE74B24C48DED0091F470 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				FB2FE75F24C491880091F470 /* Network layer */,
+				FB2FE75424C491680091F470 /* Requests */,
+				FB2FE74E24C4913B0091F470 /* Models */,
+				FB2FE76A24C491C30091F470 /* Views */,
+				FB2FE76B24C491E70091F470 /* DI Container.swift */,
+				FB2FE76D24C492020091F470 /* Colors+Ex.swift */,
+				FB2FE76E24C492020091F470 /* Extensions.swift */,
+				FB2FE76F24C492020091F470 /* PageViewController.swift */,
+				FB2FE77024C492020091F470 /* SwiftUI+Ex.swift */,
+				FB2FE77624C4920B0091F470 /* Publishers.swift */,
+				FB2FE77524C4920B0091F470 /* UserSession.swift */,
+				FB2FE73724C48DBA0091F470 /* AppDelegate.swift */,
+				FB2FE73924C48DBA0091F470 /* SceneDelegate.swift */,
+				FB2FE73B24C48DBA0091F470 /* ContentView.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		FB2FE74E24C4913B0091F470 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				FB2FE76624C491BB0091F470 /* GoogleFileList.swift */,
+				FB2FE76724C491BB0091F470 /* Models.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		FB2FE74F24C491400091F470 /* Login screen */ = {
+			isa = PBXGroup;
+			children = (
+				FB2FE75124C491570091F470 /* SignInViewController.swift */,
+				FB2FE75024C491570091F470 /* SignInViewController.xib */,
+			);
+			path = "Login screen";
+			sourceTree = "<group>";
+		};
+		FB2FE75424C491680091F470 /* Requests */ = {
+			isa = PBXGroup;
+			children = (
+				FB2FE75624C4917B0091F470 /* Database.swift */,
+				FB2FE75824C4917B0091F470 /* DiskStorage.swift */,
+				FB2FE75924C4917B0091F470 /* GoogleDrive.swift */,
+				FB2FE75724C4917B0091F470 /* MusicPlayer.swift */,
+				FB2FE75524C4917B0091F470 /* UserPreferences.swift */,
+			);
+			path = Requests;
+			sourceTree = "<group>";
+		};
+		FB2FE75F24C491880091F470 /* Network layer */ = {
+			isa = PBXGroup;
+			children = (
+				FB2FE76224C491A20091F470 /* AsyncOperation.swift */,
+				FB2FE76324C491A30091F470 /* DownloadFileOperation.swift */,
+				FB2FE76024C4919A0091F470 /* UrlRequestable.swift */,
+			);
+			path = "Network layer";
+			sourceTree = "<group>";
+		};
+		FB2FE76A24C491C30091F470 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FB2FE79424C492BD0091F470 /* TrackListKnot.swift */,
+				FB2FE78F24C4929D0091F470 /* Main */,
+				FB2FE78024C4926D0091F470 /* Track list screen */,
+				FB2FE77F24C492650091F470 /* Playlists screen */,
+				FB2FE77E24C492460091F470 /* Settings screen */,
+				FB2FE77924C492350091F470 /* Import files screen */,
+				FB2FE74F24C491400091F470 /* Login screen */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		FB2FE77924C492350091F470 /* Import files screen */ = {
+			isa = PBXGroup;
+			children = (
+				FB2FE77A24C492400091F470 /* FilesView.swift */,
+				FB2FE77B24C492400091F470 /* FilesViewModel.swift */,
+			);
+			path = "Import files screen";
+			sourceTree = "<group>";
+		};
+		FB2FE77E24C492460091F470 /* Settings screen */ = {
+			isa = PBXGroup;
+			children = (
+				FB2FE78C24C492950091F470 /* SettingsScreen.swift */,
+				FB2FE78B24C492950091F470 /* SettingsViewModel.swift */,
+			);
+			path = "Settings screen";
+			sourceTree = "<group>";
+		};
+		FB2FE77F24C492650091F470 /* Playlists screen */ = {
+			isa = PBXGroup;
+			children = (
+				FB2FE78824C4928C0091F470 /* PlaylistsScreen.swift */,
+				FB2FE78724C4928C0091F470 /* PlaylistsViewModel.swift */,
+			);
+			path = "Playlists screen";
+			sourceTree = "<group>";
+		};
+		FB2FE78024C4926D0091F470 /* Track list screen */ = {
+			isa = PBXGroup;
+			children = (
+				FB2FE78324C4927C0091F470 /* BottomMusicControlView.swift */,
+				FB2FE78124C4927C0091F470 /* TrackListScreen.swift */,
+				FB2FE78224C4927C0091F470 /* TrackListViewModel.swift */,
+			);
+			path = "Track list screen";
+			sourceTree = "<group>";
+		};
+		FB2FE78F24C4929D0091F470 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				FB2FE79024C492A70091F470 /* MainView.swift */,
+				FB2FE79124C492A70091F470 /* MainViewModel.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -82,9 +290,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FB2FE74824C48DBC0091F470 /* Build configuration list for PBXNativeTarget "NekoMusic" */;
 			buildPhases = (
+				ACD6E2D159A158CC0A75263D /* [CP] Check Pods Manifest.lock */,
 				FB2FE73024C48DBA0091F470 /* Sources */,
 				FB2FE73124C48DBA0091F470 /* Frameworks */,
 				FB2FE73224C48DBA0091F470 /* Resources */,
+				9997FB9DAA871E5EE16DCE24 /* [CP] Embed Pods Frameworks */,
+				13D883244CB928B01D63A7CE /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -133,7 +344,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB2FE75224C491570091F470 /* SignInViewController.xib in Resources */,
 				FB2FE74424C48DBC0091F470 /* LaunchScreen.storyboard in Resources */,
+				FB2FE74D24C48E0D0091F470 /* GoogleService-Info.plist in Resources */,
 				FB2FE74124C48DBC0091F470 /* Preview Assets.xcassets in Resources */,
 				FB2FE73E24C48DBC0091F470 /* Assets.xcassets in Resources */,
 			);
@@ -141,14 +354,103 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		13D883244CB928B01D63A7CE /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-NekoMusic/Pods-NekoMusic-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-NekoMusic/Pods-NekoMusic-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NekoMusic/Pods-NekoMusic-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9997FB9DAA871E5EE16DCE24 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-NekoMusic/Pods-NekoMusic-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-NekoMusic/Pods-NekoMusic-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NekoMusic/Pods-NekoMusic-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		ACD6E2D159A158CC0A75263D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-NekoMusic-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		FB2FE73024C48DBA0091F470 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB2FE79524C492BD0091F470 /* TrackListKnot.swift in Sources */,
+				FB2FE77424C492020091F470 /* SwiftUI+Ex.swift in Sources */,
+				FB2FE76824C491BB0091F470 /* GoogleFileList.swift in Sources */,
+				FB2FE75B24C4917B0091F470 /* Database.swift in Sources */,
+				FB2FE76424C491A30091F470 /* AsyncOperation.swift in Sources */,
+				FB2FE75A24C4917B0091F470 /* UserPreferences.swift in Sources */,
+				FB2FE78924C4928C0091F470 /* PlaylistsViewModel.swift in Sources */,
+				FB2FE77124C492020091F470 /* Colors+Ex.swift in Sources */,
+				FB2FE76524C491A30091F470 /* DownloadFileOperation.swift in Sources */,
+				FB2FE75324C491570091F470 /* SignInViewController.swift in Sources */,
+				FB2FE77D24C492400091F470 /* FilesViewModel.swift in Sources */,
+				FB2FE78424C4927C0091F470 /* TrackListScreen.swift in Sources */,
+				FB2FE75E24C4917B0091F470 /* GoogleDrive.swift in Sources */,
 				FB2FE73824C48DBA0091F470 /* AppDelegate.swift in Sources */,
+				FB2FE76C24C491E70091F470 /* DI Container.swift in Sources */,
+				FB2FE77724C4920B0091F470 /* UserSession.swift in Sources */,
+				FB2FE78524C4927C0091F470 /* TrackListViewModel.swift in Sources */,
+				FB2FE78D24C492950091F470 /* SettingsViewModel.swift in Sources */,
+				FB2FE75D24C4917B0091F470 /* DiskStorage.swift in Sources */,
+				FB2FE75C24C4917B0091F470 /* MusicPlayer.swift in Sources */,
 				FB2FE73A24C48DBA0091F470 /* SceneDelegate.swift in Sources */,
 				FB2FE73C24C48DBA0091F470 /* ContentView.swift in Sources */,
+				FB2FE78624C4927C0091F470 /* BottomMusicControlView.swift in Sources */,
+				FB2FE78A24C4928C0091F470 /* PlaylistsScreen.swift in Sources */,
+				FB2FE77224C492020091F470 /* Extensions.swift in Sources */,
+				FB2FE77324C492020091F470 /* PageViewController.swift in Sources */,
+				FB2FE77824C4920B0091F470 /* Publishers.swift in Sources */,
+				FB2FE76124C4919A0091F470 /* UrlRequestable.swift in Sources */,
+				FB2FE77C24C492400091F470 /* FilesView.swift in Sources */,
+				FB2FE79224C492A70091F470 /* MainView.swift in Sources */,
+				FB2FE78E24C492950091F470 /* SettingsScreen.swift in Sources */,
+				FB2FE76924C491BB0091F470 /* Models.swift in Sources */,
+				FB2FE79324C492A70091F470 /* MainViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -282,6 +584,7 @@
 		};
 		FB2FE74924C48DBC0091F470 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AAB1E5AD1FE7D03A86D4DB45 /* Pods-NekoMusic.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -301,6 +604,7 @@
 		};
 		FB2FE74A24C48DBC0091F470 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 41A707B976B10762D04DD6BE /* Pods-NekoMusic.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
