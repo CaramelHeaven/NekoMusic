@@ -33,14 +33,14 @@ final class TrackListKnot {
     }
 
     private func remotableTracks(_ localTracks: [Track]) -> Promise<[Track]> {
-        guard let folderId = self.preferences.serverFolderId else {
+        guard let folderId = preferences.serverFolderId else {
             return Promise { resolve in
                 resolve.reject(NSError(domain: "Not found folder id in local storage", code: 0, userInfo: nil))
             }
         }
 
         return firstly {
-            self.googleDrive.files(by: folderId)
+            self.googleDrive.files(by: .filesByFolder(folderId))
         }.then { value -> Promise<[Track]> in
             let googleFiles = value.files
 
@@ -57,7 +57,7 @@ final class TrackListKnot {
             }
 
             return firstly {
-                self.googleDrive.downloadTrackFiles(files: notDownloadedTracks).map { localTracks + $0 }
+                self.googleDrive.downloadableTracks(files: notDownloadedTracks).map { localTracks + $0 }
             }.then { newTracks -> Promise<[Track]?> in
                 self.database.savingTracks(tracks: newTracks).map { $0 as [Track]? }
             }.then { _ -> Promise<GoogleFile> in

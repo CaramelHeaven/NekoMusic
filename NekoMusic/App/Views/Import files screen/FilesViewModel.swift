@@ -40,7 +40,7 @@ final class FilesViewModel: ObservableObject {
 
 fileprivate extension FilesViewModel {
     func show() {
-        remote.listOfFiles().done { [weak self] value in
+        remote.files(by: .listOfFolders).done { [weak self] value in
             self?.files = value.files
         }.catch { err in
             print("FilesViewModel ER: \(err)")

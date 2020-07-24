@@ -12,7 +12,8 @@ let diContainer: DependencyContainer = {
     let container = DependencyContainer()
 
     container.register(.singleton) { UserPreferences() }
-    container.register(.singleton) { GoogleDrive() }
+    container.register(.singleton) { Network() }
+    container.register(.singleton) { GoogleDrive($0, $1) }
     container.register(.singleton) { DiskStorage() }
     container.register(.singleton) { Database($0) }
     container.register(.singleton) { MusicPlayer($0) }

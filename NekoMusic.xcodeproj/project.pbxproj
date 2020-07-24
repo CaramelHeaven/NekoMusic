@@ -23,8 +23,6 @@
 		FB2FE75D24C4917B0091F470 /* DiskStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2FE75824C4917B0091F470 /* DiskStorage.swift */; };
 		FB2FE75E24C4917B0091F470 /* GoogleDrive.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2FE75924C4917B0091F470 /* GoogleDrive.swift */; };
 		FB2FE76124C4919A0091F470 /* UrlRequestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2FE76024C4919A0091F470 /* UrlRequestable.swift */; };
-		FB2FE76424C491A30091F470 /* AsyncOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2FE76224C491A20091F470 /* AsyncOperation.swift */; };
-		FB2FE76524C491A30091F470 /* DownloadFileOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2FE76324C491A30091F470 /* DownloadFileOperation.swift */; };
 		FB2FE76824C491BB0091F470 /* GoogleFileList.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2FE76624C491BB0091F470 /* GoogleFileList.swift */; };
 		FB2FE76924C491BB0091F470 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2FE76724C491BB0091F470 /* Models.swift */; };
 		FB2FE76C24C491E70091F470 /* DI Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2FE76B24C491E70091F470 /* DI Container.swift */; };
@@ -46,6 +44,7 @@
 		FB2FE79224C492A70091F470 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2FE79024C492A70091F470 /* MainView.swift */; };
 		FB2FE79324C492A70091F470 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2FE79124C492A70091F470 /* MainViewModel.swift */; };
 		FB2FE79524C492BD0091F470 /* TrackListKnot.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2FE79424C492BD0091F470 /* TrackListKnot.swift */; };
+		FB455ECA24CA466600620FF0 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB455EC924CA466600620FF0 /* Network.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -69,8 +68,6 @@
 		FB2FE75824C4917B0091F470 /* DiskStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiskStorage.swift; sourceTree = "<group>"; };
 		FB2FE75924C4917B0091F470 /* GoogleDrive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleDrive.swift; sourceTree = "<group>"; };
 		FB2FE76024C4919A0091F470 /* UrlRequestable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UrlRequestable.swift; sourceTree = "<group>"; };
-		FB2FE76224C491A20091F470 /* AsyncOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsyncOperation.swift; sourceTree = "<group>"; };
-		FB2FE76324C491A30091F470 /* DownloadFileOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadFileOperation.swift; sourceTree = "<group>"; };
 		FB2FE76624C491BB0091F470 /* GoogleFileList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleFileList.swift; sourceTree = "<group>"; };
 		FB2FE76724C491BB0091F470 /* Models.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		FB2FE76B24C491E70091F470 /* DI Container.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DI Container.swift"; sourceTree = "<group>"; };
@@ -92,6 +89,7 @@
 		FB2FE79024C492A70091F470 /* MainView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		FB2FE79124C492A70091F470 /* MainViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		FB2FE79424C492BD0091F470 /* TrackListKnot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackListKnot.swift; sourceTree = "<group>"; };
+		FB455EC924CA466600620FF0 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,7 +163,7 @@
 		FB2FE74B24C48DED0091F470 /* App */ = {
 			isa = PBXGroup;
 			children = (
-				FB2FE75F24C491880091F470 /* Network layer */,
+				FB2FE75F24C491880091F470 /* Network low lvl */,
 				FB2FE75424C491680091F470 /* Requests */,
 				FB2FE74E24C4913B0091F470 /* Models */,
 				FB2FE76A24C491C30091F470 /* Views */,
@@ -213,14 +211,13 @@
 			path = Requests;
 			sourceTree = "<group>";
 		};
-		FB2FE75F24C491880091F470 /* Network layer */ = {
+		FB2FE75F24C491880091F470 /* Network low lvl */ = {
 			isa = PBXGroup;
 			children = (
-				FB2FE76224C491A20091F470 /* AsyncOperation.swift */,
-				FB2FE76324C491A30091F470 /* DownloadFileOperation.swift */,
 				FB2FE76024C4919A0091F470 /* UrlRequestable.swift */,
+				FB455EC924CA466600620FF0 /* Network.swift */,
 			);
-			path = "Network layer";
+			path = "Network low lvl";
 			sourceTree = "<group>";
 		};
 		FB2FE76A24C491C30091F470 /* Views */ = {
@@ -422,11 +419,9 @@
 				FB2FE77424C492020091F470 /* SwiftUI+Ex.swift in Sources */,
 				FB2FE76824C491BB0091F470 /* GoogleFileList.swift in Sources */,
 				FB2FE75B24C4917B0091F470 /* Database.swift in Sources */,
-				FB2FE76424C491A30091F470 /* AsyncOperation.swift in Sources */,
 				FB2FE75A24C4917B0091F470 /* UserPreferences.swift in Sources */,
 				FB2FE78924C4928C0091F470 /* PlaylistsViewModel.swift in Sources */,
 				FB2FE77124C492020091F470 /* Colors+Ex.swift in Sources */,
-				FB2FE76524C491A30091F470 /* DownloadFileOperation.swift in Sources */,
 				FB2FE75324C491570091F470 /* SignInViewController.swift in Sources */,
 				FB2FE77D24C492400091F470 /* FilesViewModel.swift in Sources */,
 				FB2FE78424C4927C0091F470 /* TrackListScreen.swift in Sources */,
@@ -438,6 +433,7 @@
 				FB2FE78D24C492950091F470 /* SettingsViewModel.swift in Sources */,
 				FB2FE75D24C4917B0091F470 /* DiskStorage.swift in Sources */,
 				FB2FE75C24C4917B0091F470 /* MusicPlayer.swift in Sources */,
+				FB455ECA24CA466600620FF0 /* Network.swift in Sources */,
 				FB2FE73A24C48DBA0091F470 /* SceneDelegate.swift in Sources */,
 				FB2FE73C24C48DBA0091F470 /* ContentView.swift in Sources */,
 				FB2FE78624C4927C0091F470 /* BottomMusicControlView.swift in Sources */,

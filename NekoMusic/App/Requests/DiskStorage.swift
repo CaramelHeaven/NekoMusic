@@ -29,16 +29,12 @@ final class DiskStorage {
             self.localableUrl(by: name)
         }.then { url -> Guarantee<(Bool, URL)> in
             self.existableFile(by: url).map { ($0, url) }
-        }.then { (fileExist, fileUrl) -> Promise<URL> in
+        }.then { (_, fileUrl) -> Promise<URL> in
             Promise { resolve in
-                if fileExist {
-                    return resolve.fulfill(fileUrl)
-                }
-
                 do {
                     try data.write(to: fileUrl, options: .atomicWrite)
                 } catch {
-                    print("ER: \(error)")
+                    print("writableFile: \(error)")
                     resolve.reject(error)
                 }
 

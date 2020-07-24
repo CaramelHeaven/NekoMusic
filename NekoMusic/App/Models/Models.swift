@@ -24,7 +24,6 @@ class Playlist: Object, Identifiable, Codable {
 
 class Track: Object, Identifiable, Codable {
     @objc dynamic var id: String!
-    @objc dynamic var localStringUrl: String!
     @objc dynamic var name: String!
     var playlists = RealmSwift.List<Playlist>()
 
@@ -48,10 +47,9 @@ class Track: Object, Identifiable, Codable {
         return value
     }
 
-    convenience init(id: String, localStringUrl: String, name: String) {
+    convenience init(id: String, name: String) {
         self.init()
         self.id = id
-        self.localStringUrl = localStringUrl
         self.name = name
     }
 
@@ -70,7 +68,7 @@ extension Array where Element == Track {
     }
 
     func getTrack(current: Track, direction: TrackDirection) -> Track? {
-        guard let index = self.firstIndex(where: { $0 == current }) else {
+        guard let index = firstIndex(where: { $0 == current }) else {
             return nil
         }
         let requiredIndex = direction == .next ? self.index(after: index) : self.index(before: index)

@@ -9,29 +9,27 @@
 import PromiseKit
 
 final class GoogleDrive: UrlRequestable {
+    private let network: Network
+    private let disk: DiskStorage
+
+    // Used for serial files downloading in dispatch queue
+    private let semaphore = DispatchSemaphore(value: 1)
+    private let queue = DispatchQueue(label: "Queue.GoogleDrive")
     private let pageSize = 1000
 
-    private let downloadFileQueue = OperationQueue()
-
-    /// Get list of folders from user cloud 'disk'
-    func listOfFiles() -> Promise<GoogleFileList> {
-        let urlStr = "https://www.googleapis.com/drive/v3/files?pageSize=\(pageSize)&q=mimeType = \"application/vnd.google-apps.folder\""
-
-        return firstly {
-            self.buildableUrl(by: urlStr)
-        }.then {
-            self.executableRequest(with: $0, decode: GoogleFileList.self)
-        }
+    init(_ network: Network, _ disk: DiskStorage) {
+        self.network = network
+        self.disk = disk
     }
 
-    /// Get files by folder id for future downloading
-    func files(by folderId: String) -> Promise<GoogleFileList> {
-        let urlStr = "https://www.googleapis.com/drive/v3/files?pageSize=\(pageSize)&q=\"\(folderId)\" in parents"
+    /// Get files by query
+    func files(by query: ApiQuery) -> Promise<GoogleFileList> {
+        let urlStr = "https://www.googleapis.com/drive/v3/files?pageSize=\(pageSize)&\(query.result)"
 
         return firstly {
             self.buildableUrl(by: urlStr)
         }.then {
-            self.executableRequest(with: $0, decode: GoogleFileList.self)
+            self.network.executableRequest(with: $0, decode: GoogleFileList.self)
         }
     }
 
@@ -42,7 +40,7 @@ final class GoogleDrive: UrlRequestable {
         return firstly {
             self.buildableUrl(by: urlStr)
         }.then {
-            self.executableRequest(with: $0, decode: GoogleFileList.self)
+            self.network.executableRequest(with: $0, decode: GoogleFileList.self)
         }
     }
 
@@ -60,7 +58,7 @@ final class GoogleDrive: UrlRequestable {
         return firstly {
             self.buildableMultipartUrl(by: urlStr, parameters: json, method: .post, data: data)
         }.then {
-            self.executableRequest(with: $0, decode: GoogleFile.self)
+            self.network.executableRequest(with: $0, decode: GoogleFile.self)
         }
     }
 
@@ -75,7 +73,7 @@ final class GoogleDrive: UrlRequestable {
         return firstly {
             self.buildableUrl(by: urlStr, method: .post, data: data)
         }.then {
-            self.executableRequest(with: $0, decode: GoogleFile.self)
+            self.network.executableRequest(with: $0, decode: GoogleFile.self)
         }
     }
 
@@ -95,73 +93,82 @@ final class GoogleDrive: UrlRequestable {
         return firstly {
             self.buildableMultipartUrl(by: urlStr, parameters: json, method: .post, data: data)
         }.then {
-            self.executableRequest(with: $0, decode: GoogleFile.self)
+            self.network.executableRequest(with: $0, decode: GoogleFile.self)
+        }
+    }
+
+    /// Serial downloading files from google drive to local storage
+    /// - Parameter files: google files which we got from promises chaining
+    /// - Returns: array of Tracks which we'll write to realm in the knot layer
+    func downloadableTracks(files: [GoogleFile]) -> Promise<[Track]> {
+        return Promise { resolve in
+            publisher.send(.allFilesCount(files.count))
+
+            let group = DispatchGroup()
+            var tracks = [Track]()
+            var count = 0
+
+            files.indices.forEach { index in
+                queue.async { [weak self] in
+                    guard let self = self else { return }
+
+                    group.enter()
+                    self.semaphore.wait()
+
+                    self.loadableFile(files[index]).done { track in
+                        tracks.append(track)
+
+                        DispatchQueue.main.async {
+                            count += 1
+                            publisher.send(.downloadedFilesCount(count))
+                        }
+
+                        self.semaphore.signal()
+                        group.leave()
+                    }.catch { err in
+                        print("ER \(err)")
+                        fatalError()
+                    }
+                }
+            }
+
+            group.notify(queue: .main) {
+                resolve.fulfill(tracks)
+            }
         }
     }
 }
 
-// MARK: - Remote
+// MARK: - API queries
 
 extension GoogleDrive {
-    func getFile<T: Decodable>(fileId: String, decode: T.Type) -> Promise<T> {
-        let urlStr = "https://www.googleapis.com/drive/v3/files/\(fileId)?alt=media"
+    enum ApiQuery {
+        case listOfFolders
+        case filesByFolder(String)
+
+        var result: String {
+            switch self {
+            case .listOfFolders:
+                return "q=mimeType = \"application/vnd.google-apps.folder\""
+            case let .filesByFolder(id):
+                return "q=\"\(id)\" in parents"
+            }
+        }
+    }
+}
+
+fileprivate extension GoogleDrive {
+    func loadableFile(_ file: GoogleFile) -> Promise<Track> {
+        let urlStr = "https://www.googleapis.com/drive/v3/files/\(file.id)?alt=media"
 
         return firstly {
             self.buildableUrl(by: urlStr)
         }.then {
-            self.executableRequest(with: $0, decode: T.self)
-        }
-    }
-
-    // need to extract this func to new class
-    func downloadTrackFiles(files: [GoogleFile]) -> Promise<[Track]> {
-        publisher.send(.allFilesCount(files.count))
-
-        return Promise { resolve in
-            var tracks = [Track]()
-            let group = DispatchGroup()
-
-            let operations = files.indices.compactMap { index -> DownloadFileOperation? in
-                let urlStr = "https://www.googleapis.com/drive/v3/files/\(files[index].id)?alt=media"
-                guard let request = self.makeURLRequest(by: urlStr) else {
-                    return nil
-                }
-
-                let op = DownloadFileOperation(fileName: files[index].name, request: request)
-                op.completionBlock = {
-                    guard let url = op.result else {
-                        return
-                    }
-
-                    let track = Track(id: files[index].id, localStringUrl: url.absoluteString, name: files[index].name)
-
-                    tracks.append(track)
-                    group.leave()
-
-                    DispatchQueue.main.async {
-                        publisher.send(.downloadedFilesCount(index + 1))
-                    }
-                }
-
-                return op
-            }
-
-            // Set sequence work
-            if operations.count > 1 {
-                (1...operations.count - 1).forEach { index in
-                    operations[index].addDependency(operations[index - 1])
-                }
-            }
-
-            operations.forEach {
-                group.enter()
-                self.downloadFileQueue.addOperation($0)
-            }
-
-            // addBarrierBlock doesnt wait [last] operation completion block
-            group.notify(queue: .main) {
-                resolve.fulfill(tracks)
-            }
+            self.network.executableRequest(with: $0)
+        }.then { data in
+            self.disk.writableFile(name: file.name, data: data)
+        }.then { _ in
+            Promise.value(Track(id: UUID().uuidString, name: file.name))
         }
     }
 }
