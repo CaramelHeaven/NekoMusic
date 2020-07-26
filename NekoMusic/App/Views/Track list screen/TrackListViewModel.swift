@@ -52,7 +52,7 @@ final class TrackListViewModel: ObservableObject {
             currentTrack = track
         }
 
-        guard let playingTrack = self.currentTrack else {
+        guard let playingTrack = currentTrack else {
             return
         }
 
@@ -72,7 +72,7 @@ final class TrackListViewModel: ObservableObject {
     }
 
     func playNext(direction: Array<Track>.TrackDirection) {
-        guard let playingTrack = self.currentTrack else { return }
+        guard let playingTrack = currentTrack else { return }
 
         let track = tracks.getTrack(current: playingTrack, direction: direction)
         play(track)
@@ -84,10 +84,53 @@ final class TrackListViewModel: ObservableObject {
             return
         }
 
-        guard let i = self.selectedTracks.firstIndex(of: track) else {
+        guard let i = selectedTracks.firstIndex(of: track) else {
             return
         }
         selectedTracks.remove(at: i)
+    }
+}
+
+// MARK: - Playlists actions
+
+fileprivate extension TrackListViewModel {
+    func selectedPlaylist(playlist: Playlist) {
+        tracks = cachedMainTracks?.filter { t -> Bool in
+            t.playlists.contains { $0.name == playlist.name }
+        } ?? []
+
+        isPlaylistEnable = true
+    }
+
+    func reset() {
+        tracks = cachedMainTracks ?? []
+        isPlaylistEnable = false
+    }
+}
+
+// MARK: - Knotting
+
+extension TrackListViewModel {
+    func load(isNeedSyncFromRemote: Bool = false) {
+        knot.userableTracks(isNeedSyncFromRemote).done { [weak self] tracks in
+            guard let self = self else { return }
+
+            self.tracks = tracks
+            self.cachedMainTracks = tracks
+        }.catch {
+            print("showUserTracks ER: \($0)")
+        }
+    }
+
+    func addPlaylist(with tracks: [Track], playlistName: String) {
+        knot.addPlaylist(tracks, playlistName).done { [weak self] _ in
+            self?.selectedTracks.forEach { $0.isTrackSelected = false }
+            self?.selectedTracks.removeAll()
+
+            publisher.send(.addedNewablePlaylist)
+        }.catch {
+            print("ER: \($0)")
+        }
     }
 }
 
@@ -155,49 +198,6 @@ extension TrackListViewModel: ObservableCommands {
                 self?.playNext(direction: .next)
             }
             .store(in: &subscribers)
-    }
-}
-
-// MARK: - Playlists actions
-
-fileprivate extension TrackListViewModel {
-    func selectedPlaylist(playlist: Playlist) {
-        tracks = cachedMainTracks?.filter { t -> Bool in
-            t.playlists.contains { $0.name == playlist.name }
-        } ?? []
-
-        isPlaylistEnable = true
-    }
-
-    func reset() {
-        tracks = cachedMainTracks ?? []
-        isPlaylistEnable = false
-    }
-}
-
-// MARK: - Interactor Helper
-
-extension TrackListViewModel {
-    func load(isNeedSyncFromRemote: Bool = true) {
-        knot.userableTracks(isNeedSyncFromRemote).done { [weak self] tracks in
-            guard let self = self else { return }
-
-            self.tracks = tracks
-            self.cachedMainTracks = tracks
-        }.catch {
-            print("showUserTracks ER: \($0)")
-        }
-    }
-
-    func addPlaylist(with tracks: [Track], playlistName: String) {
-        knot.addPlaylist(tracks, playlistName).done { [weak self] _ in
-            self?.selectedTracks.forEach { $0.isTrackSelected = false }
-            self?.selectedTracks.removeAll()
-
-            publisher.send(.addedNewablePlaylist)
-        }.catch {
-            print("ER: \($0)")
-        }
     }
 }
 

@@ -56,6 +56,6 @@ extension SignInViewController: GIDSignInDelegate {
 
         window.overrideUserInterfaceStyle = .dark
 
-        window.rootViewController = UIHostingController(rootView: MainView())
+        window.rootViewController = UIHostingController(rootView: PreliminaryView())
     }
 }

@@ -3,7 +3,7 @@
 //  NekoMusic
 //
 //  Created by Sergey Fominov on 19/07/2020.
-//  Copyright © 2020 Sergey Fominov. All rights reserved.
+//  Copyright © 2020 NekoMusic. All rights reserved.
 //
 
 import AVFoundation
@@ -13,6 +13,8 @@ import UIKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    private let preferences = diContainer.resolve(type: UserPreferences.self)
+
     // MARK: UISceneSession Lifecycle
 
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
@@ -21,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
     }
 
-    //this function is added only
+    // this function is added only
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
         return GIDSignIn.sharedInstance().handle(url as URL?,
                                                  sourceApplication: options[UIApplication.OpenURLOptionsKey.sourceApplication] as? String,
@@ -43,6 +45,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("ER")
         }
         return true
+    }
+
+    func applicationWillTerminate(_ application: UIApplication) {
+        if preferences.isAppFirstLaunched {
+            preferences.set(key: .isAppFirstLaunched, value: false)
+        }
     }
 
     func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {

@@ -26,7 +26,7 @@ final class PlaylistsViewModel: ObservableObject, ObservableCommands {
         self.accentColor = Color(preferences.accentColor)
 
         subscribed()
-        load()
+//        load()
     }
 
     func subscribed() {

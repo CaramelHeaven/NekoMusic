@@ -3,7 +3,7 @@
 //  NekoMusic
 //
 //  Created by Sergey Fominov on 19/07/2020.
-//  Copyright © 2020 Sergey Fominov. All rights reserved.
+//  Copyright © 2020 NekoMusic. All rights reserved.
 //
 
 import SwiftUI

@@ -15,7 +15,7 @@ let diContainer: DependencyContainer = {
     container.register(.singleton) { Network() }
     container.register(.singleton) { GoogleDrive($0, $1) }
     container.register(.singleton) { DiskStorage() }
-    container.register(.singleton) { Database($0) }
+    container.register(.singleton) { Database($0, $1) }
     container.register(.singleton) { MusicPlayer($0) }
     container.register(.singleton) { NSPublisher() }
 
@@ -23,13 +23,21 @@ let diContainer: DependencyContainer = {
 
     container.register(.singleton) { () -> TrackListKnot in
         let remote = container.resolve(type: GoogleDrive.self)
-        let preferences = container.resolve(type: UserPreferences.self)
         let local = container.resolve(type: Database.self)
+        let preferences = container.resolve(type: UserPreferences.self)
 
-        return TrackListKnot(remote, preferences, local)
+        return TrackListKnot(remote, local, preferences)
     }
 
     // MARK: - View Models
+
+    container.register(.singleton) { () -> PreliminaryViewModel in
+        let remote = container.resolve(type: GoogleDrive.self)
+        let local = container.resolve(type: Database.self)
+        let preferences = container.resolve(type: UserPreferences.self)
+
+        return PreliminaryViewModel(remote, local, preferences)
+    }
 
     container.register(.singleton) { () -> PlaylistsViewModel in
         let local = container.resolve(type: Database.self)

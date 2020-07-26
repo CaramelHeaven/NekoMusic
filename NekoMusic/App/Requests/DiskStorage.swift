@@ -26,68 +26,78 @@ final class DiskStorage {
 
     func writableFile(name: String, data: Data) -> Promise<URL> {
         firstly {
-            self.localableUrl(by: name)
-        }.then { url -> Guarantee<(Bool, URL)> in
-            self.existableFile(by: url).map { ($0, url) }
-        }.then { (_, fileUrl) -> Promise<URL> in
+            self.localUrl(by: name)
+        }.then { url -> Promise<URL> in
             Promise { resolve in
                 do {
-                    try data.write(to: fileUrl, options: .atomicWrite)
+                    try data.write(to: url, options: .atomicWrite)
                 } catch {
-                    print("writableFile: \(error)")
-                    resolve.reject(error)
+                    throw error
                 }
 
-                resolve.fulfill(fileUrl)
+                resolve.fulfill(url)
+            }
+        }
+    }
+
+    func remove(fileUrl: URL) -> Promise<Void> {
+        Promise { resolve in
+            do {
+                try self.disk.removeItem(at: fileUrl)
+                resolve.fulfill_()
+            } catch {
+                throw error
             }
         }
     }
 
     func remove(fileName: String) -> Promise<Void> {
         firstly {
-            self.localableUrl(by: fileName)
+            self.gettableFile(by: fileName)
         }.then { url -> Promise<Void> in
             Promise { resolve in
+                guard let url = url else { return resolve.fulfill_() }
+
                 do {
                     try self.disk.removeItem(at: url)
                     resolve.fulfill_()
                 } catch {
-                    print("ERROR: \(error)")
-                    resolve.reject(error)
+                    throw error
                 }
             }
         }
     }
 
-    func gettableFile(name: String) -> Promise<URL> {
+    func gettableFile(by name: String) -> Guarantee<URL?> {
         firstly {
-            self.localableUrl(by: name)
-        }.then { url -> Guarantee<(Bool, URL)> in
-            self.existableFile(by: url).map { ($0, url) }
-        }.then { (fileExist, fileUrl) -> Promise<URL> in
-            Promise { resolve in
-                guard fileExist else {
-                    return resolve.reject(NSError(domain: "File doesn't exist", code: 0, userInfo: nil))
-                }
-
-                return resolve.fulfill(fileUrl)
-            }
-        }
-    }
-}
-
-fileprivate extension DiskStorage {
-    func localableUrl(by name: String) -> Guarantee<URL> {
-        return Guarantee { resolve in
-            let url = self.applicationDocumentsDirectory.appendingPathComponent("\(name)")
-
-            resolve(url)
+            self.localUrl(by: name)
+        }.then { url -> Guarantee<(URL, Bool)> in
+            Guarantee.value(self.disk.fileExists(atPath: url.path))
+                .map { (url, $0) }
+        }.then { (fileUrl, isExist) -> Guarantee<URL?> in
+            Guarantee.value(isExist ? fileUrl : nil)
         }
     }
 
-    func existableFile(by url: URL) -> Guarantee<Bool> {
-        return Guarantee { resolve in
-            resolve(self.disk.fileExists(atPath: url.path))
+    /// The same as gettableFile but without promise for the sake of flexibility
+    func gettableFile(name: String) -> URL? {
+        let url = applicationDocumentsDirectory.appendingPathComponent("\(name)")
+        guard disk.fileExists(atPath: url.path) else {
+            return nil
         }
+
+        return url
+    }
+
+    func existableFile(by name: String) -> Guarantee<Bool> {
+        firstly {
+            self.gettableFile(by: name)
+        }.then { url -> Guarantee<Bool> in
+            Guarantee.value(url != nil)
+        }
+    }
+
+    func localUrl(by name: String) -> Guarantee<URL> {
+        Guarantee.value(applicationDocumentsDirectory.appendingPathComponent("\(name)"))
     }
 }

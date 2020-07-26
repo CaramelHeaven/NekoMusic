@@ -37,7 +37,7 @@ class Track: Object, Identifiable, Codable {
 
     /// Playlist names for UI label
     var uiPlaylists: String {
-        var value = self.playlists.reduce("") { result, playlist -> String in
+        var value = playlists.reduce("") { result, playlist -> String in
             result + playlist.name + " - "
         }
         guard !value.isEmpty else { return "_" }
@@ -46,6 +46,9 @@ class Track: Object, Identifiable, Codable {
 
         return value
     }
+
+    /// Local track url for music player
+    var localUrl: URL!
 
     convenience init(id: String, name: String) {
         self.init()

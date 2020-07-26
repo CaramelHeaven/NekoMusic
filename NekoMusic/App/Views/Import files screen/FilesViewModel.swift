@@ -42,8 +42,8 @@ fileprivate extension FilesViewModel {
     func show() {
         remote.files(by: .listOfFolders).done { [weak self] value in
             self?.files = value.files
-        }.catch { err in
-            print("FilesViewModel ER: \(err)")
+        }.catch { _ in
+            fatalError()
         }
     }
 }

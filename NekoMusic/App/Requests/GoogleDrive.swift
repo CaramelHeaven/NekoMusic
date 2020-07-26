@@ -82,7 +82,7 @@ final class GoogleDrive: UrlRequestable {
     ///   - fileId: google file id
     ///   - fileUrl: local file url
     func uploadableFile(by fileId: String, fileUrl: URL) -> Promise<GoogleFile> {
-        let urlStr = "https://www.googleapis.com/upload/drive/v3/files/\(fileId)/?uploadType=multipart"
+        let urlStr = "https://www.googleapis.com/upload/drive/v3/files/?uploadType=multipart&upload_id=\(fileId)"
 
         let data = try! Data(contentsOf: fileUrl)
         let json: [String: String] = [
@@ -109,22 +109,22 @@ final class GoogleDrive: UrlRequestable {
             var count = 0
 
             files.indices.forEach { index in
+                group.enter()
                 queue.async { [weak self] in
                     guard let self = self else { return }
 
-                    group.enter()
                     self.semaphore.wait()
 
-                    self.loadableFile(files[index]).done { track in
-                        tracks.append(track)
+                    self.loadableFile(files[index]).done { _ in
+                        tracks.append(Track(id: UUID().uuidString, name: files[index].name))
 
                         DispatchQueue.main.async {
                             count += 1
                             publisher.send(.downloadedFilesCount(count))
                         }
 
-                        self.semaphore.signal()
                         group.leave()
+                        self.semaphore.signal()
                     }.catch { err in
                         print("ER \(err)")
                         fatalError()
@@ -135,6 +135,18 @@ final class GoogleDrive: UrlRequestable {
             group.notify(queue: .main) {
                 resolve.fulfill(tracks)
             }
+        }
+    }
+
+    func loadableFile(_ file: GoogleFile) -> Promise<URL> {
+        let urlStr = "https://www.googleapis.com/drive/v3/files/\(file.id)?alt=media"
+
+        return firstly {
+            self.buildableUrl(by: urlStr)
+        }.then {
+            self.network.executableRequest(with: $0)
+        }.then { data in
+            self.disk.writableFile(name: file.name, data: data)
         }
     }
 }
@@ -153,22 +165,6 @@ extension GoogleDrive {
             case let .filesByFolder(id):
                 return "q=\"\(id)\" in parents"
             }
-        }
-    }
-}
-
-fileprivate extension GoogleDrive {
-    func loadableFile(_ file: GoogleFile) -> Promise<Track> {
-        let urlStr = "https://www.googleapis.com/drive/v3/files/\(file.id)?alt=media"
-
-        return firstly {
-            self.buildableUrl(by: urlStr)
-        }.then {
-            self.network.executableRequest(with: $0)
-        }.then { data in
-            self.disk.writableFile(name: file.name, data: data)
-        }.then { _ in
-            Promise.value(Track(id: UUID().uuidString, name: file.name))
         }
     }
 }

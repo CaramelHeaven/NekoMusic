@@ -7,7 +7,7 @@ target 'NekoMusic' do
 
   # Pods for NekoMusic
   pod "PromiseKit", "~> 6.8" # Core
-  pod 'RealmSwift', '~> 4.4.1' # db
+  pod 'RealmSwift' # local database
   pod "Dip" # di
   pod 'GoogleSignIn', '~> 4.1.1' # SignIn
 

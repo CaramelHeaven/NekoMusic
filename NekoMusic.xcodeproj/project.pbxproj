@@ -45,6 +45,8 @@
 		FB2FE79324C492A70091F470 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2FE79124C492A70091F470 /* MainViewModel.swift */; };
 		FB2FE79524C492BD0091F470 /* TrackListKnot.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2FE79424C492BD0091F470 /* TrackListKnot.swift */; };
 		FB455ECA24CA466600620FF0 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB455EC924CA466600620FF0 /* Network.swift */; };
+		FBEB426F24CDC1030031C4E2 /* PreliminaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBEB426E24CDC1030031C4E2 /* PreliminaryViewModel.swift */; };
+		FBEB427124CDC8C30031C4E2 /* PreliminaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBEB427024CDC8C20031C4E2 /* PreliminaryView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -90,6 +92,8 @@
 		FB2FE79124C492A70091F470 /* MainViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		FB2FE79424C492BD0091F470 /* TrackListKnot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackListKnot.swift; sourceTree = "<group>"; };
 		FB455EC924CA466600620FF0 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		FBEB426E24CDC1030031C4E2 /* PreliminaryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreliminaryViewModel.swift; sourceTree = "<group>"; };
+		FBEB427024CDC8C20031C4E2 /* PreliminaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreliminaryView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -223,6 +227,7 @@
 		FB2FE76A24C491C30091F470 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				FBEB426D24CDC0F10031C4E2 /* Preliminary screen */,
 				FB2FE79424C492BD0091F470 /* TrackListKnot.swift */,
 				FB2FE78F24C4929D0091F470 /* Main */,
 				FB2FE78024C4926D0091F470 /* Track list screen */,
@@ -280,6 +285,15 @@
 			path = Main;
 			sourceTree = "<group>";
 		};
+		FBEB426D24CDC0F10031C4E2 /* Preliminary screen */ = {
+			isa = PBXGroup;
+			children = (
+				FBEB426E24CDC1030031C4E2 /* PreliminaryViewModel.swift */,
+				FBEB427024CDC8C20031C4E2 /* PreliminaryView.swift */,
+			);
+			path = "Preliminary screen";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -311,7 +325,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 1160;
 				LastUpgradeCheck = 1160;
-				ORGANIZATIONNAME = "Sergey Fominov";
+				ORGANIZATIONNAME = NekoMusic;
 				TargetAttributes = {
 					FB2FE73324C48DBA0091F470 = {
 						CreatedOnToolsVersion = 11.6;
@@ -428,6 +442,7 @@
 				FB2FE75E24C4917B0091F470 /* GoogleDrive.swift in Sources */,
 				FB2FE73824C48DBA0091F470 /* AppDelegate.swift in Sources */,
 				FB2FE76C24C491E70091F470 /* DI Container.swift in Sources */,
+				FBEB427124CDC8C30031C4E2 /* PreliminaryView.swift in Sources */,
 				FB2FE77724C4920B0091F470 /* UserSession.swift in Sources */,
 				FB2FE78524C4927C0091F470 /* TrackListViewModel.swift in Sources */,
 				FB2FE78D24C492950091F470 /* SettingsViewModel.swift in Sources */,
@@ -446,6 +461,7 @@
 				FB2FE79224C492A70091F470 /* MainView.swift in Sources */,
 				FB2FE78E24C492950091F470 /* SettingsScreen.swift in Sources */,
 				FB2FE76924C491BB0091F470 /* Models.swift in Sources */,
+				FBEB426F24CDC1030031C4E2 /* PreliminaryViewModel.swift in Sources */,
 				FB2FE79324C492A70091F470 /* MainViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

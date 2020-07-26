@@ -12,10 +12,12 @@ final class UserPreferences {
     enum DefaultSettings: String {
         case accentColor
         case serverFolderId
+        case databasePath
+        case isAppFirstLaunched
     }
 
     var accentColor: UIColor {
-        guard let hexStr = self.gettable(key: .accentColor) as? String else {
+        guard let hexStr = gettableKey(key: .accentColor) as? String else {
             return UIColor.white
         }
 
@@ -23,14 +25,22 @@ final class UserPreferences {
     }
 
     var serverFolderId: String? {
-        gettable(key: .serverFolderId) as? String
+        gettableKey(key: .serverFolderId) as? String
     }
 
-    func gettable(key: DefaultSettings) -> Any? {
-        return UserDefaults.standard.object(forKey: key.rawValue)
+    var databasePath: URL? {
+        gettableKey(key: .databasePath) as? URL
+    }
+
+    var isAppFirstLaunched: Bool {
+        gettableKey(key: .isAppFirstLaunched) as? Bool ?? true
     }
 
     func set(key: DefaultSettings, value: Any?) {
         UserDefaults.standard.set(value, forKey: key.rawValue)
+    }
+
+    private func gettableKey(key: DefaultSettings) -> Any? {
+        return UserDefaults.standard.object(forKey: key.rawValue)
     }
 }

@@ -16,10 +16,6 @@ final class MusicPlayer: NSObject {
         case playing(Track, Bool = false), stop(Track), none
     }
 
-    private var nsPublisher: NSPublisher {
-        return diContainer.resolve(type: NSPublisher.self)
-    }
-
     private let disk: DiskStorage
 
     var executingTrack: Track?
@@ -27,6 +23,7 @@ final class MusicPlayer: NSObject {
 
     private var avPlayer: AVAudioPlayer?
     private var playbackTimer: ResumableTimer?
+    private let nsPublisher = diContainer.resolve(type: NSPublisher.self)
 
     init(_ disk: DiskStorage) {
         self.disk = disk
@@ -113,23 +110,17 @@ fileprivate extension MusicPlayer {
                     return resolve.fulfill(state)
                 }
 
-                disk.gettableFile(name: track.name)
-                    .done { url in
-                        self.avPlayer = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileType.mp3.rawValue)
-                        self.avPlayer?.delegate = self
+                self.avPlayer = try AVAudioPlayer(contentsOf: track.localUrl, fileTypeHint: AVFileType.mp3.rawValue)
+                self.avPlayer?.delegate = self
 
-                        self.avPlayer?.play()
-
-                        resolve.fulfill(state)
-                    }.catch {
-                        resolve.reject($0)
-                    }
+                self.avPlayer?.play()
             case .stop:
                 self.avPlayer?.pause()
-                resolve.fulfill(state)
             case .none:
                 fatalError()
             }
+
+            resolve.fulfill(state)
         }
     }
 }
