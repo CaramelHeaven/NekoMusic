@@ -49,7 +49,7 @@ struct TrackListScreen: View {
                         .navigationBarItems(trailing:
                             HStack(spacing: 20) {
                                 Button(action: {
-                                    self.viewModel.load(isNeedSyncFromRemote: true)
+                                    self.viewModel.load(isNeedSync: true)
                                 }) {
                                     Image(systemName: "square.and.arrow.down")
                                         .imageScale(.large)

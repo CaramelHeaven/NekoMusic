@@ -21,7 +21,7 @@ final class TrackListKnot {
     }
 
     func userableTracks(_ isSyncNeeded: Bool) -> Promise<[Track]> {
-        firstly {
+        return firstly {
             self.syncFromRemoteIfNeeded(isSyncNeeded)
         }.then { _ -> Promise<[Track]> in
             self.database.tracks()
@@ -35,7 +35,7 @@ final class TrackListKnot {
     }
 
     private func syncFromRemoteIfNeeded(_ isSyncNeeded: Bool) -> Promise<Void> {
-        guard isSyncNeeded else {
+        guard isSyncNeeded || preferences.isAppFirstLaunched else {
             return Promise.value
         }
 

@@ -12,7 +12,16 @@ struct PreliminaryView: View {
     @ObservedObject private var viewModel = diContainer.resolve(type: PreliminaryViewModel.self)
 
     var body: some View {
-        Text("adasdas")
+        NavigationView {
+            VStack(spacing: 30) {
+                Text("Preliminary settings. Waiting...")
+
+//                NavigationLink(destination: MainView()) {
+//                    Text("Choose Heads")
+//                }
+            }
+            .navigationBarTitle("Preliminary view", displayMode: .inline)
+        }
     }
 }
 

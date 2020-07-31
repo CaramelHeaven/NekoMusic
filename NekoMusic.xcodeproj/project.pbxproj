@@ -8,9 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		EBF23CE11B74F401619E0E65 /* Pods_NekoMusic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42C9C45CE95167F0C242BA66 /* Pods_NekoMusic.framework */; };
+		FB24E34A24D2324D0054159C /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB24E34924D2324D0054159C /* NetworkError.swift */; };
+		FB24E34D24D233160054159C /* URLSesison+.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB24E34C24D233160054159C /* URLSesison+.swift */; };
 		FB2FE73824C48DBA0091F470 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2FE73724C48DBA0091F470 /* AppDelegate.swift */; };
 		FB2FE73A24C48DBA0091F470 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2FE73924C48DBA0091F470 /* SceneDelegate.swift */; };
-		FB2FE73C24C48DBA0091F470 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2FE73B24C48DBA0091F470 /* ContentView.swift */; };
 		FB2FE73E24C48DBC0091F470 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB2FE73D24C48DBC0091F470 /* Assets.xcassets */; };
 		FB2FE74124C48DBC0091F470 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB2FE74024C48DBC0091F470 /* Preview Assets.xcassets */; };
 		FB2FE74424C48DBC0091F470 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB2FE74224C48DBC0091F470 /* LaunchScreen.storyboard */; };
@@ -45,6 +46,7 @@
 		FB2FE79324C492A70091F470 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2FE79124C492A70091F470 /* MainViewModel.swift */; };
 		FB2FE79524C492BD0091F470 /* TrackListKnot.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2FE79424C492BD0091F470 /* TrackListKnot.swift */; };
 		FB455ECA24CA466600620FF0 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB455EC924CA466600620FF0 /* Network.swift */; };
+		FBE254C524D33BA2002F2AAA /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE254C424D33BA2002F2AAA /* Coordinator.swift */; };
 		FBEB426F24CDC1030031C4E2 /* PreliminaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBEB426E24CDC1030031C4E2 /* PreliminaryViewModel.swift */; };
 		FBEB427124CDC8C30031C4E2 /* PreliminaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBEB427024CDC8C20031C4E2 /* PreliminaryView.swift */; };
 /* End PBXBuildFile section */
@@ -53,10 +55,11 @@
 		41A707B976B10762D04DD6BE /* Pods-NekoMusic.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NekoMusic.release.xcconfig"; path = "Target Support Files/Pods-NekoMusic/Pods-NekoMusic.release.xcconfig"; sourceTree = "<group>"; };
 		42C9C45CE95167F0C242BA66 /* Pods_NekoMusic.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NekoMusic.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAB1E5AD1FE7D03A86D4DB45 /* Pods-NekoMusic.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NekoMusic.debug.xcconfig"; path = "Target Support Files/Pods-NekoMusic/Pods-NekoMusic.debug.xcconfig"; sourceTree = "<group>"; };
+		FB24E34924D2324D0054159C /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
+		FB24E34C24D233160054159C /* URLSesison+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSesison+.swift"; sourceTree = "<group>"; };
 		FB2FE73424C48DBA0091F470 /* NekoMusic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NekoMusic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB2FE73724C48DBA0091F470 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FB2FE73924C48DBA0091F470 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		FB2FE73B24C48DBA0091F470 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		FB2FE73D24C48DBC0091F470 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FB2FE74024C48DBC0091F470 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		FB2FE74324C48DBC0091F470 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -92,6 +95,7 @@
 		FB2FE79124C492A70091F470 /* MainViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		FB2FE79424C492BD0091F470 /* TrackListKnot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackListKnot.swift; sourceTree = "<group>"; };
 		FB455EC924CA466600620FF0 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		FBE254C424D33BA2002F2AAA /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		FBEB426E24CDC1030031C4E2 /* PreliminaryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreliminaryViewModel.swift; sourceTree = "<group>"; };
 		FBEB427024CDC8C20031C4E2 /* PreliminaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreliminaryView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -167,10 +171,8 @@
 		FB2FE74B24C48DED0091F470 /* App */ = {
 			isa = PBXGroup;
 			children = (
-				FB2FE75F24C491880091F470 /* Network low lvl */,
-				FB2FE75424C491680091F470 /* Requests */,
-				FB2FE74E24C4913B0091F470 /* Models */,
-				FB2FE76A24C491C30091F470 /* Views */,
+				FB2FE73724C48DBA0091F470 /* AppDelegate.swift */,
+				FB2FE73924C48DBA0091F470 /* SceneDelegate.swift */,
 				FB2FE76B24C491E70091F470 /* DI Container.swift */,
 				FB2FE76D24C492020091F470 /* Colors+Ex.swift */,
 				FB2FE76E24C492020091F470 /* Extensions.swift */,
@@ -178,9 +180,11 @@
 				FB2FE77024C492020091F470 /* SwiftUI+Ex.swift */,
 				FB2FE77624C4920B0091F470 /* Publishers.swift */,
 				FB2FE77524C4920B0091F470 /* UserSession.swift */,
-				FB2FE73724C48DBA0091F470 /* AppDelegate.swift */,
-				FB2FE73924C48DBA0091F470 /* SceneDelegate.swift */,
-				FB2FE73B24C48DBA0091F470 /* ContentView.swift */,
+				FBE254C424D33BA2002F2AAA /* Coordinator.swift */,
+				FB2FE75F24C491880091F470 /* Network low lvl */,
+				FB2FE75424C491680091F470 /* Requests */,
+				FB2FE74E24C4913B0091F470 /* Models */,
+				FB2FE76A24C491C30091F470 /* Views */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -220,6 +224,8 @@
 			children = (
 				FB2FE76024C4919A0091F470 /* UrlRequestable.swift */,
 				FB455EC924CA466600620FF0 /* Network.swift */,
+				FB24E34924D2324D0054159C /* NetworkError.swift */,
+				FB24E34C24D233160054159C /* URLSesison+.swift */,
 			);
 			path = "Network low lvl";
 			sourceTree = "<group>";
@@ -227,14 +233,14 @@
 		FB2FE76A24C491C30091F470 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				FBEB426D24CDC0F10031C4E2 /* Preliminary screen */,
 				FB2FE79424C492BD0091F470 /* TrackListKnot.swift */,
+				FB2FE74F24C491400091F470 /* Login screen */,
+				FBEB426D24CDC0F10031C4E2 /* Preliminary screen */,
+				FB2FE77924C492350091F470 /* Import files screen */,
 				FB2FE78F24C4929D0091F470 /* Main */,
 				FB2FE78024C4926D0091F470 /* Track list screen */,
 				FB2FE77F24C492650091F470 /* Playlists screen */,
 				FB2FE77E24C492460091F470 /* Settings screen */,
-				FB2FE77924C492350091F470 /* Import files screen */,
-				FB2FE74F24C491400091F470 /* Login screen */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -435,7 +441,9 @@
 				FB2FE75B24C4917B0091F470 /* Database.swift in Sources */,
 				FB2FE75A24C4917B0091F470 /* UserPreferences.swift in Sources */,
 				FB2FE78924C4928C0091F470 /* PlaylistsViewModel.swift in Sources */,
+				FB24E34D24D233160054159C /* URLSesison+.swift in Sources */,
 				FB2FE77124C492020091F470 /* Colors+Ex.swift in Sources */,
+				FBE254C524D33BA2002F2AAA /* Coordinator.swift in Sources */,
 				FB2FE75324C491570091F470 /* SignInViewController.swift in Sources */,
 				FB2FE77D24C492400091F470 /* FilesViewModel.swift in Sources */,
 				FB2FE78424C4927C0091F470 /* TrackListScreen.swift in Sources */,
@@ -450,7 +458,6 @@
 				FB2FE75C24C4917B0091F470 /* MusicPlayer.swift in Sources */,
 				FB455ECA24CA466600620FF0 /* Network.swift in Sources */,
 				FB2FE73A24C48DBA0091F470 /* SceneDelegate.swift in Sources */,
-				FB2FE73C24C48DBA0091F470 /* ContentView.swift in Sources */,
 				FB2FE78624C4927C0091F470 /* BottomMusicControlView.swift in Sources */,
 				FB2FE78A24C4928C0091F470 /* PlaylistsScreen.swift in Sources */,
 				FB2FE77224C492020091F470 /* Extensions.swift in Sources */,
@@ -458,6 +465,7 @@
 				FB2FE77824C4920B0091F470 /* Publishers.swift in Sources */,
 				FB2FE76124C4919A0091F470 /* UrlRequestable.swift in Sources */,
 				FB2FE77C24C492400091F470 /* FilesView.swift in Sources */,
+				FB24E34A24D2324D0054159C /* NetworkError.swift in Sources */,
 				FB2FE79224C492A70091F470 /* MainView.swift in Sources */,
 				FB2FE78E24C492950091F470 /* SettingsScreen.swift in Sources */,
 				FB2FE76924C491BB0091F470 /* Models.swift in Sources */,

@@ -22,10 +22,6 @@ final class TrackListViewModel: ObservableObject {
     @Published var accentColor: Color = .white
     @Published var isError: Bool = false
 
-    private var nsPublisher: NSPublisher {
-        diContainer.resolve(type: NSPublisher.self)
-    }
-
     private let knot: TrackListKnot
     private let music: MusicPlayer
     private let preferences: UserPreferences
@@ -111,8 +107,8 @@ fileprivate extension TrackListViewModel {
 // MARK: - Knotting
 
 extension TrackListViewModel {
-    func load(isNeedSyncFromRemote: Bool = false) {
-        knot.userableTracks(isNeedSyncFromRemote).done { [weak self] tracks in
+    func load(isNeedSync: Bool = false) {
+        knot.userableTracks(isNeedSync).done { [weak self] tracks in
             guard let self = self else { return }
 
             self.tracks = tracks
@@ -127,7 +123,7 @@ extension TrackListViewModel {
             self?.selectedTracks.forEach { $0.isTrackSelected = false }
             self?.selectedTracks.removeAll()
 
-            publisher.send(.addedNewablePlaylist)
+            reporter.send(.addedNewablePlaylist)
         }.catch {
             print("ER: \($0)")
         }
@@ -138,61 +134,52 @@ extension TrackListViewModel {
 
 extension TrackListViewModel: ObservableCommands {
     func subscribed() {
-        publisher
+        reporter
             .filter { $0 == .resetPlaylist }
             .sink { [weak self] _ in
                 self?.reset()
             }
             .store(in: &subscribers)
 
-        publisher
-            .filter { $0.isSelectedPlaylist }
-            .compactMap { $0.valuable(by: Playlist.self) }
+        reporter
+            .compactMap { $0.extractable(by: Playlist.self) }
             .sink { [weak self] p in
                 self?.selectedPlaylist(playlist: p)
             }
             .store(in: &subscribers)
 
-        publisher
-            .filter { $0.isSettingsColor }
-            .compactMap { $0.valuable(by: Color.self) }
+        reporter
+            .compactMap { $0.extractable(by: Color.self) }
             .sink { [weak self] c in
                 self?.accentColor = c
             }
             .store(in: &subscribers)
 
-        publisher
+        reporter
             .filter { $0.isDownloadedFilesCount }
-            .compactMap { $0.valuable(by: Int.self) }
+            .compactMap { $0.extractable(by: Int.self) }
             .sink { [weak self] v in
                 self?.downloadedCount = v
             }
             .store(in: &subscribers)
 
-        publisher
+        reporter
             .filter { $0.isAllFilesCount }
-            .compactMap { $0.valuable(by: Int.self) }
+            .compactMap { $0.extractable(by: Int.self) }
             .sink { [weak self] v in
                 self?.tracksCount = v
             }
             .store(in: &subscribers)
 
-        publisher
-            .filter { $0 == .userChoosedFolder }
-            .sink { [weak self] _ in
-                self?.load()
-            }
-            .store(in: &subscribers)
-
-        nsPublisher.sub
+        reporter
             .filter { $0.isPassedTrackTime }
-            .compactMap { $0.valuable(by: Double.self) }
+            .compactMap { $0.extractable(by: Double.self) }
             .sink { [weak self] v in
                 self?.passedTrackTimeValue = v
             }
             .store(in: &subscribers)
 
-        nsPublisher.sub
+        reporter
             .filter { $0 == .trackDidFinished }
             .sink { [weak self] _ in
                 self?.playNext(direction: .next)

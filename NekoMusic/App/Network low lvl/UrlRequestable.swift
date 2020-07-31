@@ -17,7 +17,9 @@ enum HttpMethod: String {
     }
 }
 
-protocol UrlRequestable {}
+protocol UrlRequestable {
+    var session: UserSession { get }
+}
 
 extension UrlRequestable {
     /// Create simple request
@@ -29,7 +31,7 @@ extension UrlRequestable {
 
             var request = URLRequest(url: url)
 
-            request.setValue("Bearer \(UserSession.shared.accessToken)", forHTTPHeaderField: "Authorization")
+            request.setValue("Bearer \(session.accessToken)", forHTTPHeaderField: "Authorization")
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
             request.setValue("application/json", forHTTPHeaderField: "Accept")
 
@@ -50,7 +52,7 @@ extension UrlRequestable {
 
             let boundary = boundaryString()
 
-            request.setValue("Bearer \(UserSession.shared.accessToken)", forHTTPHeaderField: "Authorization")
+            request.setValue("Bearer \(session.accessToken)", forHTTPHeaderField: "Authorization")
             request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
 
             request.httpMethod = method.raw

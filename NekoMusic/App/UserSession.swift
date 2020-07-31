@@ -6,11 +6,24 @@
 //  Copyright © 2020 NekoMusic. All rights reserved.
 //
 
-final class UserSession {
-    static let shared = UserSession()
+import GoogleSignIn
 
+final class UserSession {
     var apiKey = "AIzaSyB_C9cPKhYEoy6pgq84DbeK79jrym-ny3w" // google
     var accessToken = ""
 
-    private init() {}
+    var user: GIDGoogleUser?
+
+    init(_ user: GIDGoogleUser? = nil) {
+        self.user = user
+    }
+
+    func silently() {
+        user?.authentication.refreshTokens(handler: { kek, r in
+            print("R: \(r)")
+            print("kek: \(kek)")
+
+            print("fukc")
+        })
+    }
 }

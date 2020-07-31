@@ -30,7 +30,7 @@ final class PlaylistsViewModel: ObservableObject, ObservableCommands {
     }
 
     func subscribed() {
-        publisher
+        reporter
             .filter { $0 == .addedNewablePlaylist }
             .sink { [weak self] _ in
                 self?.load()
@@ -48,11 +48,11 @@ final class PlaylistsViewModel: ObservableObject, ObservableCommands {
 
     func select(playlist: Playlist) {
         isPlaylistEnable = true
-        publisher.send(.selectPlaylist(playlist))
+        reporter.send(.selectPlaylist(playlist))
     }
 
     func reset() {
         isPlaylistEnable = false
-        publisher.send(.resetPlaylist)
+        reporter.send(.resetPlaylist)
     }
 }

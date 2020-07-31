@@ -11,7 +11,6 @@ import SwiftUI
 struct MainView: View {
     @ObservedObject var viewModel = diContainer.resolve(type: MainViewModel.self)
 
-    @State private var willOpenImportFolder = false
     @State var currentPageIndex = 1
 
     let subviews = [
@@ -21,15 +20,7 @@ struct MainView: View {
     ]
 
     var body: some View {
-        ZStack {
-            if viewModel.filesImportNeeded {
-                ZStack {
-                    FilesView()
-                }
-            } else {
-                PageViewController(currentPageIndex: $currentPageIndex, viewControllers: subviews)
-                    .edgesIgnoringSafeArea(.all)
-            }
-        }
+        PageViewController(currentPageIndex: $currentPageIndex, viewControllers: subviews)
+            .edgesIgnoringSafeArea(.all)
     }
 }

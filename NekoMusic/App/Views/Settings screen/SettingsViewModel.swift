@@ -27,7 +27,7 @@ final class SettingsViewModel: ObservableObject {
     func selectedColor(color: UIColor) {
         preferences.set(key: .accentColor, value: color.hexValue)
 
-        publisher.send(.settingsColor(Color(color)))
+        reporter.send(.settingsColor(Color(color)))
     }
 
     private func cachableColorIndex() -> Int? {

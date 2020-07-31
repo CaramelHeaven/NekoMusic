@@ -19,11 +19,11 @@ final class Database {
         self.disk = fileStorage
         self.preferences = preferences
 
-        let config = Realm.Configuration(fileURL: preferences.databasePath)
+        let config = preferences.databasePath != nil ? Realm.Configuration(fileURL: preferences.databasePath!) : Realm.Configuration()
         self.realm = try? Realm(configuration: config)
     }
 
-    func recreate(fileUrl: URL? = nil) -> Promise<Void> {
+    func recreate(fileUrl: URL) -> Promise<Void> {
         Promise { resolve in
             do {
                 let config = Realm.Configuration(fileURL: fileUrl)
@@ -55,7 +55,7 @@ final class Database {
         }
     }
 
-    func extractableItems<T: Object>(decode: T.Type) -> Promise<[T]> {
+    func extractableItems<T: Object>(decode _: T.Type) -> Promise<[T]> {
         Promise { resolve in
             guard let realm = realm else {
                 throw NSError(domain: "Realm is nil", code: 0, userInfo: nil)

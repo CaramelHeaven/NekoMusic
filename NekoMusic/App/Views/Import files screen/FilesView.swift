@@ -35,7 +35,7 @@ struct FilesView: View {
                             FileView(file: self.viewModel.files[index], rowSelected: self.highlitedRow == index)
                                 .onTapGesture {
                                     self.highlitedRow = index
-                                    self.viewModel.selected(rowIndex: index)
+                                    self.viewModel.select(rowIndex: index)
                                 }
                         }
                     }

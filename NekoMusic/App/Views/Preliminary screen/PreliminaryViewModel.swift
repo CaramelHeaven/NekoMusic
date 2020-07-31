@@ -11,6 +11,8 @@ import PromiseKit
 import SwiftUI
 
 class PreliminaryViewModel: ObservableObject {
+    @State var preliminaryDone: Bool = false
+
     private let remote: GoogleDrive
     private let database: Database
     private let preferences: UserPreferences
@@ -19,16 +21,17 @@ class PreliminaryViewModel: ObservableObject {
         self.remote = remote
         self.database = database
         self.preferences = preferences
+
+        preload()
     }
 
     func preload() {
         firstly {
             self.recreateDbIfNeeded(preferences.isAppFirstLaunched)
         }.done { _ in
-            // to main view
-        }.catch {
-            print("E:R \($0)")
-            fatalError()
+            reporter.send(.coordinator(.files))
+        }.catch { _ in
+            print("catch")
         }
     }
 }

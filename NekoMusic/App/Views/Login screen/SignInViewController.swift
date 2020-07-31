@@ -18,6 +18,10 @@ final class SignInViewController: UIViewController, GIDSignInUIDelegate {
         makeViews()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+    }
+
     private func makeViews() {
         googleDriveButton.backgroundColor = .clear
         googleDriveButton.layer.cornerRadius = 5
@@ -44,18 +48,11 @@ final class SignInViewController: UIViewController, GIDSignInUIDelegate {
 extension SignInViewController: GIDSignInDelegate {
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser?, withError error: Error?) {
         guard let user = user, error == nil else {
-            print("SignInViewController err: \(error!)")
+            print("ERR: \(error!)")
             return
         }
+        diContainer.register(.singleton) { UserSession(user) }
 
-        guard let window = UIApplication.shared.windows.first else {
-            return
-        }
-
-        UserSession.shared.accessToken = user.authentication?.accessToken ?? ""
-
-        window.overrideUserInterfaceStyle = .dark
-
-        window.rootViewController = UIHostingController(rootView: PreliminaryView())
+        reporter.send(.coordinator(.preliminary))
     }
 }

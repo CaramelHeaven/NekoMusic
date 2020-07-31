@@ -9,10 +9,11 @@
 import PromiseKit
 
 final class GoogleDrive: UrlRequestable {
+    lazy var session: UserSession = diContainer.resolve(type: UserSession.self)
+
     private let network: Network
     private let disk: DiskStorage
 
-    // Used for serial files downloading in dispatch queue
     private let semaphore = DispatchSemaphore(value: 1)
     private let queue = DispatchQueue(label: "Queue.GoogleDrive")
     private let pageSize = 1000
@@ -102,7 +103,7 @@ final class GoogleDrive: UrlRequestable {
     /// - Returns: array of Tracks which we'll write to realm in the knot layer
     func downloadableTracks(files: [GoogleFile]) -> Promise<[Track]> {
         return Promise { resolve in
-            publisher.send(.allFilesCount(files.count))
+            reporter.send(.allFilesCount(files.count))
 
             let group = DispatchGroup()
             var tracks = [Track]()
@@ -120,7 +121,7 @@ final class GoogleDrive: UrlRequestable {
 
                         DispatchQueue.main.async {
                             count += 1
-                            publisher.send(.downloadedFilesCount(count))
+                            reporter.send(.downloadedFilesCount(count))
                         }
 
                         group.leave()
@@ -138,6 +139,9 @@ final class GoogleDrive: UrlRequestable {
         }
     }
 
+    /// Load single file
+    /// - Parameter file: google file
+    /// - Returns: Local url
     func loadableFile(_ file: GoogleFile) -> Promise<URL> {
         let urlStr = "https://www.googleapis.com/drive/v3/files/\(file.id)?alt=media"
 

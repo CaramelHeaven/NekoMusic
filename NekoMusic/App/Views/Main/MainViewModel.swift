@@ -9,27 +9,20 @@
 import Combine
 
 class MainViewModel: ObservableObject {
-    @Published var filesImportNeeded: Bool
-
     var subscribers: Set<AnyCancellable> = []
 
-    private let preferences: UserPreferences
-
-    init(_ preferences: UserPreferences) {
-        self.preferences = preferences
-        self.filesImportNeeded = preferences.serverFolderId == nil
-
+    init() {
         subscribed()
     }
 }
 
 extension MainViewModel: ObservableCommands {
     func subscribed() {
-        publisher
-            .filter { $0 == .userChoosedFolder }
-            .sink { [weak self] _ in
-                self?.filesImportNeeded = false
-            }
-            .store(in: &subscribers)
+//        reporter
+//            .filter { $0 == .userChoosedFolder }
+//            .sink { [weak self] _ in
+//                self?.filesImportNeeded = false
+//            }
+//            .store(in: &subscribers)
     }
 }

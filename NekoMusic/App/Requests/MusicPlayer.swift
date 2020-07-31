@@ -23,7 +23,6 @@ final class MusicPlayer: NSObject {
 
     private var avPlayer: AVAudioPlayer?
     private var playbackTimer: ResumableTimer?
-    private let nsPublisher = diContainer.resolve(type: NSPublisher.self)
 
     init(_ disk: DiskStorage) {
         self.disk = disk
@@ -44,7 +43,7 @@ extension MusicPlayer: AVAudioPlayerDelegate {
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         guard flag else { return }
 
-        nsPublisher.sub.send(.trackDidFinished)
+        reporter.send(.trackDidFinished)
     }
 }
 
@@ -55,7 +54,7 @@ extension MusicPlayer: ResumableTimerDelegate {
         let progress = avPlayer.currentTime / avPlayer.duration
         guard progress != 0 else { return }
 
-        nsPublisher.sub.send(.passedTrackTime(progress))
+        reporter.send(.passedTrackTime(progress))
     }
 }
 

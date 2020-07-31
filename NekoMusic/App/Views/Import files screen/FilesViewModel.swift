@@ -22,7 +22,7 @@ final class FilesViewModel: ObservableObject {
         show()
     }
 
-    func selected(rowIndex: Int) {
+    func select(rowIndex: Int) {
         guard files.indices.contains(rowIndex) else { return }
 
         selectedFile = files[rowIndex]
@@ -30,18 +30,14 @@ final class FilesViewModel: ObservableObject {
 
     func save() {
         preferences.set(key: .serverFolderId, value: selectedFile?.id)
-
-        // delay is needed to smoothly move the screen after closing the animation
-        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(300)) {
-            publisher.send(.userChoosedFolder)
-        }
+        reporter.send(.coordinator(.main))
     }
 }
 
 fileprivate extension FilesViewModel {
     func show() {
-        remote.files(by: .listOfFolders).done { [weak self] value in
-            self?.files = value.files
+        remote.files(by: .listOfFolders).done { value in
+            self.files = value.files
         }.catch { _ in
             fatalError()
         }
