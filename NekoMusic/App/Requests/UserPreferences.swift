@@ -12,7 +12,6 @@ final class UserPreferences {
     enum DefaultSettings: String {
         case accentColor
         case serverFolderId
-        case databasePath
         case isAppFirstLaunched
     }
 
@@ -26,10 +25,6 @@ final class UserPreferences {
 
     var serverFolderId: String? {
         gettableKey(key: .serverFolderId) as? String
-    }
-
-    var databasePath: URL? {
-        gettableKey(key: .databasePath) as? URL
     }
 
     var isAppFirstLaunched: Bool {

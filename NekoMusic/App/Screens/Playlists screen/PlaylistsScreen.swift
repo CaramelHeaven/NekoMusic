@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct PlaylistsScreen: View {
-    @ObservedObject var viewModel = diContainer.resolve(type: PlaylistsViewModel.self)
+    @ObservedObject private var viewModel = diContainer.resolve(type: PlaylistsViewModel.self)
 
     @State var highlightedRow: Int?
 

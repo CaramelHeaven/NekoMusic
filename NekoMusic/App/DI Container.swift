@@ -18,6 +18,7 @@ let diContainer: DependencyContainer = {
     container.register(.singleton) { Database($0, $1) }
     container.register(.singleton) { MusicPlayer($0) }
     container.register(.singleton) { UserSession() }
+    container.register(.singleton) { DatabaseSynchronization($0, $1) }
 
     // MARK: - Knots
 
@@ -31,15 +32,7 @@ let diContainer: DependencyContainer = {
 
     // MARK: - View Models
 
-    container.register { () -> PreliminaryViewModel in
-        let remote = container.resolve(type: GoogleDrive.self)
-        let local = container.resolve(type: Database.self)
-        let preferences = container.resolve(type: UserPreferences.self)
-
-        return PreliminaryViewModel(remote, local, preferences)
-    }
-
-    container.register { () -> PlaylistsViewModel in
+    container.register(.singleton) { () -> PlaylistsViewModel in
         let local = container.resolve(type: Database.self)
         let preferences = container.resolve(type: UserPreferences.self)
 
@@ -61,9 +54,8 @@ let diContainer: DependencyContainer = {
         return FilesViewModel(remote, preferences)
     }
 
-    container.register { SettingsViewModel(preferences: $0) }
-
-    container.register { MainViewModel() }
+    container.register(.singleton) { SettingsViewModel(preferences: $0) }
+    container.register { SquareAlertViewModel($0) }
 
     return container
 }()

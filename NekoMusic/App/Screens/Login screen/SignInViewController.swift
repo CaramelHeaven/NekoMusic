@@ -9,17 +9,25 @@
 import GoogleSignIn
 import SwiftUI
 
-final class SignInViewController: UIViewController, GIDSignInUIDelegate {
+final class SignInViewController: UIViewController {
     @IBOutlet private weak var googleDriveButton: UIButton!
+
+    private let preferences = diContainer.resolve(type: UserPreferences.self)
+    private let scopes = ["https://www.googleapis.com/auth/drive"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        makeViews()
-    }
+        GIDSignIn.sharedInstance()?.scopes = scopes
+        GIDSignIn.sharedInstance()?.presentingViewController = self
+        GIDSignIn.sharedInstance().delegate = self
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+        makeViews()
+        guard !preferences.isAppFirstLaunched else {
+            return
+        }
+
+        GIDSignIn.sharedInstance()?.restorePreviousSignIn()
     }
 
     private func makeViews() {
@@ -35,12 +43,6 @@ final class SignInViewController: UIViewController, GIDSignInUIDelegate {
     }
 
     @objc private func googleDrivePressed(_ button: UIButton) {
-        let scopes = ["https://www.googleapis.com/auth/drive"]
-
-        GIDSignIn.sharedInstance()?.scopes = scopes
-        GIDSignIn.sharedInstance().uiDelegate = self
-        GIDSignIn.sharedInstance().delegate = self
-
         GIDSignIn.sharedInstance()?.signIn()
     }
 }
@@ -53,6 +55,17 @@ extension SignInViewController: GIDSignInDelegate {
         }
         diContainer.register(.singleton) { UserSession(user) }
 
-        reporter.send(.coordinator(.preliminary))
+        guard preferences.isAppFirstLaunched else {
+            reporter.send(.coordinator(.main))
+            return
+        }
+
+        diContainer.resolve(type: DatabaseSynchronization.self)
+            .sync(direction: .fromRemote)
+
+        // Needed a delay 'cause GIDSignIn has a delay for closing own signIn controller I presume.
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(400)) {
+            reporter.send(.coordinator(.files))
+        }
     }
 }

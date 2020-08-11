@@ -13,8 +13,6 @@ import SwiftUI
 final class TrackListViewModel: ObservableObject {
     @Published var tracks: [Track] = []
     @Published var selectedTracks: [Track] = []
-    @Published var downloadedCount: Int = 0
-    @Published var tracksCount: Int = 0
     @Published var isTrackPlaylable: Bool = false
     @Published var isPlaylistEnable: Bool = false
     @Published var playingMusicName: String = "..Not playing.."
@@ -29,7 +27,7 @@ final class TrackListViewModel: ObservableObject {
     /// Cached tracks for reset filtered playlist data
     private var cachedMainTracks: [Track]?
     private var passedTrackTimeValue: Double?
-    var subscribers: Set<AnyCancellable> = []
+    private(set) var subscribers: Set<AnyCancellable> = []
 
     init(_ knot: TrackListKnot, _ music: MusicPlayer, _ preferences: UserPreferences) {
         self.knot = knot
@@ -152,22 +150,6 @@ extension TrackListViewModel: ObservableCommands {
             .compactMap { $0.extractable(by: Color.self) }
             .sink { [weak self] c in
                 self?.accentColor = c
-            }
-            .store(in: &subscribers)
-
-        reporter
-            .filter { $0.isDownloadedFilesCount }
-            .compactMap { $0.extractable(by: Int.self) }
-            .sink { [weak self] v in
-                self?.downloadedCount = v
-            }
-            .store(in: &subscribers)
-
-        reporter
-            .filter { $0.isAllFilesCount }
-            .compactMap { $0.extractable(by: Int.self) }
-            .sink { [weak self] v in
-                self?.tracksCount = v
             }
             .store(in: &subscribers)
 

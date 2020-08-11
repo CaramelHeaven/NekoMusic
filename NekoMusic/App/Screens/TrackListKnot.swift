@@ -14,6 +14,10 @@ final class TrackListKnot {
     private let preferences: UserPreferences
     private let database: Database
 
+    private lazy var databaseSync: DatabaseSynchronization = {
+        diContainer.resolve(type: DatabaseSynchronization.self)
+    }()
+
     init(_ remote: GoogleDrive, _ local: Database, _ preferences: UserPreferences) {
         self.remote = remote
         self.preferences = preferences
@@ -48,11 +52,6 @@ final class TrackListKnot {
 }
 
 fileprivate extension TrackListKnot {
-    enum SyncDirection {
-        case toRemote
-        case fromRemote
-    }
-
     func download(_ localTracks: [Track] = []) -> Promise<Void> {
         firstly {
             self.retrievableFolderId()
@@ -72,10 +71,8 @@ fileprivate extension TrackListKnot {
                 self.unuseableTracks(localTracks, remote.files)
             }.then {
                 self.database.clearUnusedIfNeeded($0)
-            }.then {
-                self.syncabableDatabase(direction: .toRemote)
             }.then { _ in
-                Promise.value
+                Promise.value(self.databaseSync.sync(direction: .toRemote))
             }
         }
     }
@@ -91,23 +88,6 @@ fileprivate extension TrackListKnot {
             }
 
             resolve.fulfill(folderId)
-        }
-    }
-
-    // add direction in the future
-    func syncabableDatabase(direction: SyncDirection) -> Promise<GoogleFile> {
-        firstly {
-            when(fulfilled: database.disk.gettableFile(by: "default.realm"), remote.remoteFile(fileName: "default.realm"))
-        }.then { (localUrl, response) -> Promise<GoogleFile> in
-            guard let localUrl = localUrl else {
-                throw NSError(domain: "Realm db is not existed", code: 0, userInfo: nil)
-            }
-
-            guard !response.files.isEmpty, let file = response.files.first else {
-                return self.remote.creationableFile(fileUrl: localUrl)
-            }
-
-            return self.remote.uploadableFile(by: file.id, fileUrl: localUrl)
         }
     }
 }

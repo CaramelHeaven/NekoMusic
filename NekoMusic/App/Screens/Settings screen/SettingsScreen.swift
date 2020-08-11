@@ -36,7 +36,7 @@ struct SettingsScreen: View {
 }
 
 struct AccentColorPicker: View {
-    @ObservedObject var viewModel = diContainer.resolve(type: SettingsViewModel.self)
+    @ObservedObject private var viewModel = diContainer.resolve(type: SettingsViewModel.self)
 
     var body: some View {
         VStack {

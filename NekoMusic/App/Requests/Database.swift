@@ -19,39 +19,26 @@ final class Database {
         self.disk = fileStorage
         self.preferences = preferences
 
-        let config = preferences.databasePath != nil ? Realm.Configuration(fileURL: preferences.databasePath!) : Realm.Configuration()
+        let realmUrl = disk.gettableFile(name: "default.realm")
+        let config = realmUrl != nil ? Realm.Configuration(fileURL: realmUrl) : Realm.Configuration()
+
         self.realm = try? Realm(configuration: config)
     }
 
     func recreate(fileUrl: URL) -> Promise<Void> {
-        Promise { resolve in
-            do {
-                let config = Realm.Configuration(fileURL: fileUrl)
-                realm = try Realm(configuration: config)
-
-                resolve.fulfill_()
-            } catch {
-                throw error
-            }
-        }
-    }
-
-    /// Remove the realm db file, this method needed if we want to use backup data for user in the future
-    func remove() -> Promise<Void> {
-        Promise<[Promise<Void>]> { resolve in
-            guard let diskUrl = realm?.configuration.fileURL else {
-                return resolve.reject(NSError(domain: "remove realm error", code: 0, userInfo: nil))
-            }
-
-            let result = [diskUrl, diskUrl.appendingPathExtension("lock"),
-                          diskUrl.appendingPathExtension("note"),
-                          diskUrl.appendingPathExtension("management")].map { self.disk.remove(fileUrl: $0) }
-
-            resolve.fulfill(result)
-        }.then {
-            when(resolved: $0)
+        firstly {
+            self.remove()
         }.then { _ in
-            Promise.value
+            Promise { resolve in
+                do {
+                    let config = Realm.Configuration(fileURL: fileUrl)
+                    self.realm = try Realm(configuration: config)
+
+                    resolve.fulfill_()
+                } catch {
+                    throw error
+                }
+            }
         }
     }
 
@@ -60,7 +47,7 @@ final class Database {
             guard let realm = realm else {
                 throw NSError(domain: "Realm is nil", code: 0, userInfo: nil)
             }
-            resolve.fulfill(Array(realm.objects(T.self)))
+            resolve.fulfill(realm.objects(T.self).toArray())
         }
     }
 
@@ -76,6 +63,25 @@ final class Database {
             } catch {
                 throw error
             }
+        }
+    }
+
+    private func remove() -> Promise<Void> {
+        Promise<[Promise<Void>]> { resolve in
+            guard let diskUrl = realm?.configuration.fileURL else {
+                return resolve.reject(NSError(domain: "remove realm error", code: 0, userInfo: nil))
+            }
+            self.realm = nil
+
+            let result = [diskUrl, diskUrl.appendingPathExtension("lock"),
+                          diskUrl.appendingPathExtension("note"),
+                          diskUrl.appendingPathExtension("management")].map { self.disk.remove(fileUrl: $0) }
+
+            resolve.fulfill(result)
+        }.then {
+            when(resolved: $0)
+        }.then { _ in
+            Promise.value
         }
     }
 }
@@ -146,5 +152,12 @@ extension Database {
                 resolve.reject(error)
             }
         }
+    }
+}
+
+fileprivate extension Results {
+    /// Array(realm.objects(T)) doesnt work
+    func toArray() -> [Element] {
+        return compactMap { $0 }
     }
 }

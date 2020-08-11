@@ -18,7 +18,6 @@ protocol ObservableCommands {
 let reporter: PassthroughSubject<PublishValue, Never> = PassthroughSubject()
 
 enum CoordinatorView {
-    case preliminary
     case files
     case main
 }
@@ -64,13 +63,13 @@ extension PublishValue {
         return true
     }
 
-    var isDownloadedFilesCount: Bool {
-        guard case PublishValue.downloadedFilesCount = self else { return false }
-        return true
+    var isDownloadedFilesCount: Int? {
+        guard case PublishValue.downloadedFilesCount = self else { return nil }
+        return extractable(by: Int.self)
     }
 
-    var isAllFilesCount: Bool {
-        guard case PublishValue.allFilesCount = self else { return false }
-        return true
+    var isAllFilesCount: Int? {
+        guard case PublishValue.allFilesCount = self else { return nil }
+        return extractable(by: Int.self)
     }
 }

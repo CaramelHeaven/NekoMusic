@@ -1,5 +1,5 @@
 //
-//  ChooseImportFoldersView.swift
+//  FilesScreen.swift
 //  NekoMusic
 //
 //  Created by Sergey Fominov on 25/05/2020.
@@ -8,8 +8,8 @@
 
 import SwiftUI
 
-struct FilesView: View {
-    @ObservedObject var viewModel = diContainer.resolve(type: FilesViewModel.self)
+struct FilesScreen: View {
+    @ObservedObject private var viewModel = diContainer.resolve(type: FilesViewModel.self)
 
     @State var highlitedRow: Int?
 
@@ -32,7 +32,7 @@ struct FilesView: View {
                 List {
                     if viewModel.files.count > 0 {
                         ForEach(0..<self.viewModel.files.count, id: \.self) { index in
-                            FileView(file: self.viewModel.files[index], rowSelected: self.highlitedRow == index)
+                            FileRow(file: self.viewModel.files[index], rowSelected: self.highlitedRow == index)
                                 .onTapGesture {
                                     self.highlitedRow = index
                                     self.viewModel.select(rowIndex: index)
@@ -64,9 +64,9 @@ struct FilesView: View {
     }
 }
 
-struct FileView: View {
-    let file: GoogleFile
-    var rowSelected: Bool
+struct FileRow: View {
+    fileprivate let file: GoogleFile
+    fileprivate var rowSelected: Bool
 
     var body: some View {
         ZStack(alignment: .leading) {

@@ -17,13 +17,4 @@ final class UserSession {
     init(_ user: GIDGoogleUser? = nil) {
         self.user = user
     }
-
-    func silently() {
-        user?.authentication.refreshTokens(handler: { kek, r in
-            print("R: \(r)")
-            print("kek: \(kek)")
-
-            print("fukc")
-        })
-    }
 }

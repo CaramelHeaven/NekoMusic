@@ -17,7 +17,7 @@ final class PlaylistsViewModel: ObservableObject, ObservableCommands {
     private let local: Database
     private let preferences: UserPreferences
 
-    var subscribers: Set<AnyCancellable> = []
+    private(set) var subscribers: Set<AnyCancellable> = []
 
     init(_ local: Database, _ preferences: UserPreferences) {
         self.local = local

@@ -14,7 +14,7 @@ extension Color {
 }
 
 struct TrackListScreen: View {
-    @ObservedObject var viewModel = diContainer.resolve(type: TrackListViewModel.self)
+    @ObservedObject private var viewModel = diContainer.resolve(type: TrackListViewModel.self)
 
     init() {
         UITableView.appearance().separatorStyle = .none
@@ -32,7 +32,7 @@ struct TrackListScreen: View {
 
     func musicBody() -> some View {
         ZStack {
-            if self.viewModel.tracks.count > 0 {
+            if !self.viewModel.tracks.isEmpty {
                 ZStack {
                     NavigationView {
                         VStack {
@@ -48,13 +48,13 @@ struct TrackListScreen: View {
                         .navigationBarTitle("Music", displayMode: .inline)
                         .navigationBarItems(trailing:
                             HStack(spacing: 20) {
-                                Button(action: {
-                                    self.viewModel.load(isNeedSync: true)
-                                }) {
-                                    Image(systemName: "square.and.arrow.down")
-                                        .imageScale(.large)
-                                        .foregroundColor(self.viewModel.accentColor)
-                                }
+//                                Button(action: {
+//                                    self.viewModel.load(isNeedSync: true)
+//                                }) {
+//                                    Image(systemName: "square.and.arrow.down")
+//                                        .imageScale(.large)
+//                                        .foregroundColor(self.viewModel.accentColor)
+//                                }
 
                                 Button(action: {
 //                                    self.viewModel.uploadLocalPlaylistsToServer()
@@ -70,16 +70,16 @@ struct TrackListScreen: View {
                     BottomMusicControlView(height: 100)
                 }
             } else {
-                DownloadingAlert(viewModel: self.viewModel)
+                SquareAlert()
             }
         }
     }
 }
 
-// MARK: - Track Row in table view
+// MARK: - Track Row
 
-struct TrackRow: View {
-    @ObservedObject var viewModel = diContainer.resolve(type: TrackListViewModel.self)
+fileprivate struct TrackRow: View {
+    @ObservedObject private var viewModel = diContainer.resolve(type: TrackListViewModel.self)
 
     let track: Track
 
@@ -125,43 +125,5 @@ struct TrackRow: View {
                 self.viewModel.play(self.track)
             }
         }
-    }
-}
-
-// MARK: - Alerts
-
-struct DownloadingAlert: View {
-    @ObservedObject var viewModel: TrackListViewModel = try! diContainer.resolve()
-    @State var pepeOffset: CGFloat = -6
-
-    var body: some View {
-        return ZStack {
-            DownloadingAlertForm()
-
-            // It's interesting if we put image inside DownloadAlertForm it will be freezing sometimes while text is updating.
-            Image("pepe-test")
-                .resizable()
-                .frame(width: 100, height: 100)
-                .offset(y: pepeOffset)
-                .onAppear(perform: {
-                    self.pepeOffset = -20
-                })
-                .animation(Animation.easeInOut(duration: 1.5).repeatForever(autoreverses: true))
-        }
-    }
-}
-
-struct DownloadingAlertForm: View {
-    @ObservedObject var viewModel: TrackListViewModel = try! diContainer.resolve()
-
-    var body: some View {
-        return ZStack {
-            Text("Downloaded items \(viewModel.downloadedCount) \\ \(viewModel.tracksCount)")
-                .font(Font.custom("Menlo-Regular", size: 14))
-                .offset(y: 60)
-        }
-        .frame(width: 250, height: 250)
-        .background(Color(.displayP3, white: 0.9, opacity: 0.2))
-        .cornerRadius(16)
     }
 }

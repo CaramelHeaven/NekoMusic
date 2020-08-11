@@ -20,16 +20,13 @@ class Coordinator {
         subscribed()
     }
 
-    func preliminary() {
-        window.overrideUserInterfaceStyle = .dark
-        push(UIHostingController(rootView: PreliminaryView()))
-    }
-
     func files() {
-        push(UIHostingController(rootView: FilesView()))
+        window.overrideUserInterfaceStyle = .dark
+        push(UIHostingController(rootView: FilesScreen()))
     }
 
     func main() {
+        window.overrideUserInterfaceStyle = .dark
         push(UIHostingController(rootView: MainView()))
     }
 
@@ -47,8 +44,6 @@ extension Coordinator: ObservableCommands {
             .compactMap { $0.extractable(by: CoordinatorView.self) }
             .sink { value in
                 switch value {
-                case .preliminary:
-                    self.preliminary()
                 case .files:
                     self.files()
                 case .main:
