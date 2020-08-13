@@ -66,6 +66,23 @@ final class Database {
         }
     }
 
+    func clearUnusedIfNeeded<T: Object>(_ unusedTracks: [T]) -> Promise<Void> {
+        Promise { resolve in
+            guard !unusedTracks.isEmpty else {
+                return resolve.fulfill_()
+            }
+            do {
+                realm?.beginWrite()
+                realm?.delete(unusedTracks)
+                try realm?.commitWrite()
+
+                resolve.fulfill_()
+            } catch {
+                throw error
+            }
+        }
+    }
+
     private func remove() -> Promise<Void> {
         Promise<[Promise<Void>]> { resolve in
             guard let diskUrl = realm?.configuration.fileURL else {
@@ -86,70 +103,29 @@ final class Database {
     }
 }
 
-// MARK: - External API
+// MARK: - Playlist DAO
 
 extension Database {
-    func clearUnusedIfNeeded(_ unusedTracks: [Track]) -> Promise<Void> {
+    func createPlaylist(data: DataPlaylist) -> Promise<Void> {
         Promise { resolve in
-            guard !unusedTracks.isEmpty else {
-                return resolve.fulfill_()
-            }
             do {
                 realm?.beginWrite()
-                realm?.delete(unusedTracks)
+
+                data.tracks.forEach { track in
+                    guard let playlist = realm?.object(ofType: Playlist.self, forPrimaryKey: data.name) else {
+                        track.playlists.append(Playlist(name: data.name))
+                        return
+                    }
+                    guard !track.playlists.contains(playlist) else { return }
+
+                    track.playlists.append(playlist)
+                }
+
                 try realm?.commitWrite()
 
                 resolve.fulfill_()
             } catch {
                 throw error
-            }
-        }
-    }
-
-    func tracks() -> Promise<[Track]> {
-        firstly {
-            extractableItems(decode: Track.self)
-        }.then { arr -> Promise<[Track]> in
-            let result = arr.compactMap { t -> Track? in
-                guard let url = self.disk.gettableFile(name: t.name) else {
-                    return nil
-                }
-                t.localUrl = url
-
-                return t
-            }
-
-            return Promise.value(result)
-        }
-    }
-}
-
-// MARK: - For Tracks
-
-// rewrite
-extension Database {
-    func savePlaylist(_ tracks: [Track], _ playlistName: String) -> Promise<Void> {
-        Promise { resolve in
-            do {
-                realm?.beginWrite()
-
-                tracks.forEach { track in
-                    if let playlist = realm?.object(ofType: Playlist.self, forPrimaryKey: playlistName),
-                        playlist.name == playlistName {
-                        // If playlist not exist at track list - add, otherwise we dont need to add a duplicate
-                        if !track.playlists.contains(playlist) {
-                            track.playlists.append(playlist)
-                        }
-                    } else {
-                        track.playlists.append(Playlist(name: playlistName))
-                    }
-                }
-
-                try realm?.commitWrite()
-
-                resolve.fulfill_()
-            } catch {
-                resolve.reject(error)
             }
         }
     }

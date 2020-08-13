@@ -117,14 +117,10 @@ extension TrackListViewModel {
     }
 
     func addPlaylist(with tracks: [Track], playlistName: String) {
-        knot.addPlaylist(tracks, playlistName).done { [weak self] _ in
-            self?.selectedTracks.forEach { $0.isTrackSelected = false }
-            self?.selectedTracks.removeAll()
+        reporter.send(.createPlaylist(DataPlaylist(name: playlistName, tracks: tracks)))
 
-            reporter.send(.addedNewablePlaylist)
-        }.catch {
-            print("ER: \($0)")
-        }
+        selectedTracks.forEach { $0.isTrackSelected = false }
+        selectedTracks.removeAll()
     }
 }
 
@@ -177,22 +173,20 @@ extension TrackListViewModel {
         guard !selectedTracks.isEmpty else { return }
 
         let alertController = UIAlertController(title: nil, message: "Write a playlist name", preferredStyle: .alert)
-
-        alertController.addTextField { (textField: UITextField!) -> Void in
+        alertController.addTextField { textField -> Void in
             textField.placeholder = "Playist name"
         }
 
-        let saveAction = UIAlertAction(title: "Upload", style: .default, handler: { [weak self] _ in
-            guard let self = self, let name = alertController.textFields?.first?.text else { return }
+        let saveAction = UIAlertAction(title: "Upload", style: .default, handler: { _ in
+            guard let name = alertController.textFields?.first?.text else { return }
 
             self.addPlaylist(with: self.selectedTracks, playlistName: name)
         })
-
         let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
 
         alertController.addAction(saveAction)
         alertController.addAction(cancelAction)
 
-        UIApplication.shared.windows.first?.rootViewController?.present(alertController, animated: true, completion: nil)
+        UIApplication.topViewController()?.present(alertController, animated: true, completion: nil)
     }
 }

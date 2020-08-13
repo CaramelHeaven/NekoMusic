@@ -9,40 +9,31 @@
 import Combine
 import SwiftUI
 
-final class PlaylistsViewModel: ObservableObject, ObservableCommands {
+final class PlaylistsViewModel: ObservableObject {
     @Published var playlists: [Playlist] = []
     @Published var isPlaylistEnable: Bool = false
     @Published var accentColor: Color = .white
 
-    private let local: Database
+    private let knot: PlaylistKnot
     private let preferences: UserPreferences
 
     private(set) var subscribers: Set<AnyCancellable> = []
 
-    init(_ local: Database, _ preferences: UserPreferences) {
-        self.local = local
+    init(_ knot: PlaylistKnot, _ preferences: UserPreferences) {
+        self.knot = knot
         self.preferences = preferences
 
         self.accentColor = Color(preferences.accentColor)
 
         subscribed()
-//        load()
-    }
-
-    func subscribed() {
-        reporter
-            .filter { $0 == .addedNewablePlaylist }
-            .sink { [weak self] _ in
-                self?.load()
-            }
-            .store(in: &subscribers)
+        load()
     }
 
     func load() {
-        local.extractableItems(decode: Playlist.self).done { [weak self] playlists in
-            self?.playlists = playlists
-        }.catch {
-            print("ER: \($0)")
+        knot.playlists().done { arr in
+            self.playlists = arr
+        }.catch { err in
+            print("ER: \(err)")
         }
     }
 
@@ -54,5 +45,16 @@ final class PlaylistsViewModel: ObservableObject, ObservableCommands {
     func reset() {
         isPlaylistEnable = false
         reporter.send(.resetPlaylist)
+    }
+}
+
+extension PlaylistsViewModel: ObservableCommands {
+    func subscribed() {
+        reporter
+            .filter { $0 == .playlistDidCreated }
+            .sink { _ in
+                self.load()
+            }
+            .store(in: &subscribers)
     }
 }

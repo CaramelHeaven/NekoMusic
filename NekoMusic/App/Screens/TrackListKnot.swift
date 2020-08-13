@@ -27,14 +27,8 @@ final class TrackListKnot {
     func userableTracks(_ isSyncNeeded: Bool) -> Promise<[Track]> {
         return firstly {
             self.syncFromRemoteIfNeeded(isSyncNeeded)
-        }.then { _ -> Promise<[Track]> in
-            self.database.tracks()
-        }
-    }
-
-    func addPlaylist(_ tracks: [Track], _ playlistName: String) -> Promise<Void> {
-        firstly {
-            self.database.savePlaylist(tracks, playlistName)
+        }.then {
+            self.tracks()
         }
     }
 
@@ -52,6 +46,23 @@ final class TrackListKnot {
 }
 
 fileprivate extension TrackListKnot {
+    func tracks() -> Promise<[Track]> {
+        firstly {
+            database.extractableItems(decode: Track.self)
+        }.then { arr -> Promise<[Track]> in
+            let result = arr.compactMap { t -> Track? in
+                guard let url = self.database.disk.gettableFile(name: t.name) else {
+                    return nil
+                }
+                t.localUrl = url
+
+                return t
+            }
+
+            return Promise.value(result)
+        }
+    }
+
     func download(_ localTracks: [Track] = []) -> Promise<Void> {
         firstly {
             self.retrievableFolderId()
@@ -77,7 +88,7 @@ fileprivate extension TrackListKnot {
         }
     }
 
-    private func unuseableTracks(_ localTracks: [Track], _ remoteFiles: [GoogleFile]) -> Promise<[Track]> {
+    func unuseableTracks(_ localTracks: [Track], _ remoteFiles: [GoogleFile]) -> Promise<[Track]> {
         return Promise.value(localTracks.filter { t in !remoteFiles.contains(where: { t.name == $0.name }) })
     }
 

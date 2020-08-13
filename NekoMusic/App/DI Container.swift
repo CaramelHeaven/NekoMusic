@@ -30,13 +30,15 @@ let diContainer: DependencyContainer = {
         return TrackListKnot(remote, local, preferences)
     }
 
+    container.register(.singleton) { PlaylistKnot($0) }
+
     // MARK: - View Models
 
     container.register(.singleton) { () -> PlaylistsViewModel in
-        let local = container.resolve(type: Database.self)
+        let knot = container.resolve(type: PlaylistKnot.self)
         let preferences = container.resolve(type: UserPreferences.self)
 
-        return PlaylistsViewModel(local, preferences)
+        return PlaylistsViewModel(knot, preferences)
     }
 
     container.register(.singleton) { () -> TrackListViewModel in

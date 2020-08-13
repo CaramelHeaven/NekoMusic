@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		EBF23CE11B74F401619E0E65 /* Pods_NekoMusic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42C9C45CE95167F0C242BA66 /* Pods_NekoMusic.framework */; };
+		FB1B641724E2B9420052A9A3 /* PlaylistKnot.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1B641624E2B9420052A9A3 /* PlaylistKnot.swift */; };
 		FB24E34A24D2324D0054159C /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB24E34924D2324D0054159C /* NetworkError.swift */; };
 		FB24E34D24D233160054159C /* URLSesison+.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB24E34C24D233160054159C /* URLSesison+.swift */; };
 		FB2FE73824C48DBA0091F470 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2FE73724C48DBA0091F470 /* AppDelegate.swift */; };
@@ -54,6 +55,7 @@
 		41A707B976B10762D04DD6BE /* Pods-NekoMusic.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NekoMusic.release.xcconfig"; path = "Target Support Files/Pods-NekoMusic/Pods-NekoMusic.release.xcconfig"; sourceTree = "<group>"; };
 		42C9C45CE95167F0C242BA66 /* Pods_NekoMusic.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NekoMusic.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAB1E5AD1FE7D03A86D4DB45 /* Pods-NekoMusic.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NekoMusic.debug.xcconfig"; path = "Target Support Files/Pods-NekoMusic/Pods-NekoMusic.debug.xcconfig"; sourceTree = "<group>"; };
+		FB1B641624E2B9420052A9A3 /* PlaylistKnot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistKnot.swift; sourceTree = "<group>"; };
 		FB24E34924D2324D0054159C /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		FB24E34C24D233160054159C /* URLSesison+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSesison+.swift"; sourceTree = "<group>"; };
 		FB2FE73424C48DBA0091F470 /* NekoMusic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NekoMusic.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -232,6 +234,7 @@
 		FB2FE76A24C491C30091F470 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				FB1B641624E2B9420052A9A3 /* PlaylistKnot.swift */,
 				FB2FE79424C492BD0091F470 /* TrackListKnot.swift */,
 				FB2FE78F24C4929D0091F470 /* Main pager view */,
 				FB2FE74F24C491400091F470 /* Login screen */,
@@ -471,6 +474,7 @@
 				FB2FE77C24C492400091F470 /* FilesScreen.swift in Sources */,
 				FB24E34A24D2324D0054159C /* NetworkError.swift in Sources */,
 				FB2FE79224C492A70091F470 /* MainView.swift in Sources */,
+				FB1B641724E2B9420052A9A3 /* PlaylistKnot.swift in Sources */,
 				FBE4742A24D61D3F00FD4A17 /* SquareAlertViewModel.swift in Sources */,
 				FB2FE78E24C492950091F470 /* SettingsScreen.swift in Sources */,
 				FB2FE76924C491BB0091F470 /* Models.swift in Sources */,

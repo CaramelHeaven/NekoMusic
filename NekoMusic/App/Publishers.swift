@@ -29,7 +29,8 @@ enum PublishValue: Equatable {
 
     case selectPlaylist(Playlist)
     case resetPlaylist
-    case addedNewablePlaylist
+    case createPlaylist(DataPlaylist)
+    case playlistDidCreated
 
     case settingsColor(Color)
 
@@ -49,6 +50,8 @@ enum PublishValue: Equatable {
             return d as? T
         case let .downloadedFilesCount(i), let .allFilesCount(i):
             return i as? T
+        case let .createPlaylist(v):
+            return v as? T
         case let .coordinator(v):
             return v as? T
         default:
@@ -72,4 +75,11 @@ extension PublishValue {
         guard case PublishValue.allFilesCount = self else { return nil }
         return extractable(by: Int.self)
     }
+}
+
+// MARK: - Models
+
+struct DataPlaylist: Equatable {
+    let name: String
+    let tracks: [Track]
 }

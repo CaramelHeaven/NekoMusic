@@ -9,7 +9,7 @@
 import PromiseKit
 
 final class GoogleDrive: UrlRequestable {
-    lazy var session: UserSession = diContainer.resolve(type: UserSession.self)
+    private(set) var session: UserSession = diContainer.resolve(type: UserSession.self)
 
     private let network: Network
     private let disk: DiskStorage

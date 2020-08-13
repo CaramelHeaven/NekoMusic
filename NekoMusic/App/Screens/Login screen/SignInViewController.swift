@@ -6,6 +6,7 @@
 //  Copyright © 2020 NekoMusic. All rights reserved.
 //
 
+import Combine
 import GoogleSignIn
 import SwiftUI
 
@@ -14,7 +15,6 @@ final class SignInViewController: UIViewController {
 
     private let preferences = diContainer.resolve(type: UserPreferences.self)
     private let scopes = ["https://www.googleapis.com/auth/drive"]
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
