@@ -43,18 +43,28 @@ fileprivate struct PagerView<Content: View>: View {
                 self.content.frame(width: geometry.size.width)
             }
             .frame(width: geometry.size.width, alignment: .leading)
-            .offset(x: -CGFloat(self.currentIndex) * geometry.size.width)
+            .offset(x: -1 * CGFloat(self.currentIndex) * geometry.size.width)
             .offset(x: self.translation)
             .animation(.interactiveSpring())
             .gesture(
-                DragGesture().updating(self.$translation) { value, state, _ in
-                    state = value.translation.width
-                }.onEnded { value in
-                    let offset = value.translation.width / geometry.size.width
-                    let newIndex = (CGFloat(self.currentIndex) - offset).rounded()
+                // 25 is a value for delete action in list - playlist screen
+                DragGesture(minimumDistance: 25, coordinateSpace: .global)
+                    .updating(self.$translation) { value, state, _ in
+                        switch self.currentIndex {
+                        case 0:
+                            guard value.translation.width < 0 else { return }
+                        case 2:
+                            guard value.translation.width > 0 else { return }
+                        default:
+                            break
+                        }
+                        state = value.translation.width
+                    }.onEnded { value in
+                        let offset = value.translation.width / geometry.size.width
+                        let newIndex = (CGFloat(self.currentIndex) - offset).rounded()
 
-                    self.currentIndex = min(max(Int(newIndex), 0), self.pageCount - 1)
-                }
+                        self.currentIndex = min(max(Int(newIndex), 0), self.pageCount - 1)
+                    }
             )
         }
     }

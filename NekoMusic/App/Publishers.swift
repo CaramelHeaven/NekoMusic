@@ -31,6 +31,7 @@ enum PublishValue: Equatable {
     case resetPlaylist
     case createPlaylist(DataPlaylist)
     case playlistDidCreated
+    case playlistDidRemoved
 
     case settingsColor(Color)
 

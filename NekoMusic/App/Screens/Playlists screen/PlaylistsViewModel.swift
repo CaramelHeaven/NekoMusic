@@ -7,6 +7,7 @@
 //
 
 import Combine
+import PromiseKit
 import SwiftUI
 
 final class PlaylistsViewModel: ObservableObject {
@@ -45,6 +46,21 @@ final class PlaylistsViewModel: ObservableObject {
     func reset() {
         isPlaylistEnable = false
         reporter.send(.resetPlaylist)
+    }
+
+    func remove(rows: IndexSet) {
+        let mockArr = playlists
+        playlists.remove(atOffsets: rows)
+
+        firstly {
+            Promise.value(rows.compactMap { mockArr.indices.contains($0) ? mockArr[$0] : nil })
+        }.then {
+            self.knot.remove($0)
+        }.done { _ in
+            reporter.send(.playlistDidRemoved)
+        }.catch { er in
+            print("ER: \(er)")
+        }
     }
 }
 

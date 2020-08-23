@@ -130,37 +130,45 @@ extension TrackListViewModel: ObservableCommands {
     func subscribed() {
         reporter
             .filter { $0 == .resetPlaylist }
-            .sink { [weak self] _ in
-                self?.reset()
+            .sink { _ in
+                self.reset()
             }
             .store(in: &subscribers)
 
         reporter
             .compactMap { $0.extractable(by: Playlist.self) }
-            .sink { [weak self] p in
-                self?.selectedPlaylist(playlist: p)
+            .sink { p in
+                self.selectedPlaylist(playlist: p)
             }
             .store(in: &subscribers)
 
         reporter
             .compactMap { $0.extractable(by: Color.self) }
-            .sink { [weak self] c in
-                self?.accentColor = c
+            .sink { c in
+                self.accentColor = c
             }
             .store(in: &subscribers)
 
         reporter
             .filter { $0.isPassedTrackTime }
             .compactMap { $0.extractable(by: Double.self) }
-            .sink { [weak self] v in
-                self?.passedTrackTimeValue = v
+            .sink { v in
+                self.passedTrackTimeValue = v
             }
             .store(in: &subscribers)
 
         reporter
             .filter { $0 == .trackDidFinished }
-            .sink { [weak self] _ in
-                self?.playNext(direction: .next)
+            .sink { _ in
+                self.playNext(direction: .next)
+            }
+            .store(in: &subscribers)
+
+        reporter
+            .filter { $0 == .playlistDidRemoved }
+            .sink { _ in
+                // just leave here now
+                self.load()
             }
             .store(in: &subscribers)
     }

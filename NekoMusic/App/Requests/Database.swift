@@ -27,7 +27,7 @@ final class Database {
 
     func recreate(fileUrl: URL) -> Promise<Void> {
         firstly {
-            self.remove()
+            self.clear()
         }.then { _ in
             Promise { resolve in
                 do {
@@ -47,6 +47,7 @@ final class Database {
             guard let realm = realm else {
                 throw NSError(domain: "Realm is nil", code: 0, userInfo: nil)
             }
+
             resolve.fulfill(realm.objects(T.self).toArray())
         }
     }
@@ -56,13 +57,22 @@ final class Database {
             do {
                 realm?.beginWrite()
                 realm?.add(items, update: .modified)
-
                 try realm?.commitWrite()
 
                 resolve.fulfill_()
             } catch {
                 throw error
             }
+        }
+    }
+
+    func remove<T: Object>(items: [T]) -> Promise<Void> {
+        Promise { resolve in
+            realm?.beginWrite()
+            realm?.delete(items)
+            try realm?.commitWrite()
+
+            resolve.fulfill_()
         }
     }
 
@@ -83,7 +93,7 @@ final class Database {
         }
     }
 
-    private func remove() -> Promise<Void> {
+    private func clear() -> Promise<Void> {
         Promise<[Promise<Void>]> { resolve in
             guard let diskUrl = realm?.configuration.fileURL else {
                 return resolve.reject(NSError(domain: "remove realm error", code: 0, userInfo: nil))

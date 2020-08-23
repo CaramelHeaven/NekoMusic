@@ -21,8 +21,17 @@ final class PlaylistKnot {
     }
 
     func playlists() -> Promise<[Playlist]> {
-        firstly {
-            database.extractableItems(decode: Playlist.self)
+        database.extractableItems(decode: Playlist.self)
+    }
+
+    // The list has a [removable animation] and thus we need to wait some time before element will be deleted
+    func remove(_ playlists: [Playlist]) -> Promise<Void> {
+        Promise { resolve in
+            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(700)) {
+                self.database.remove(items: playlists)
+                    .done { resolve.fulfill_() }
+                    .catch { resolve.reject($0) }
+            }
         }
     }
 
@@ -40,7 +49,6 @@ extension PlaylistKnot: ObservableCommands {
         reporter
             .compactMap { $0.extractable(by: DataPlaylist.self) }
             .sink { data in
-                print("here: \(data)")
                 self.create(data)
             }.store(in: &subscribers)
     }
