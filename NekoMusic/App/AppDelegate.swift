@@ -45,9 +45,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
-        if preferences.isAppFirstLaunched {
-            preferences.set(key: .isAppFirstLaunched, value: false)
-        }
+        guard preferences.isAppFirstLaunched else { return }
+
+        preferences.set(key: .isAppFirstLaunched, value: false)
     }
 
     func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {

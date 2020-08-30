@@ -26,14 +26,10 @@ struct BottomMusicControlView: View {
         self.viewHeight = height
     }
 
-    var body:
-        some View {
-        VStack {
-            MusicCurrentPlayer()
-                .frame(width: UIScreen.main.bounds.width - paddingWidth, height: viewHeight)
-                .overlay(RoundedRectangle(cornerRadius: 16).stroke(self.viewModel.accentColor, lineWidth: 4))
-                .offset(y: UIScreen.main.bounds.height / 2 - viewHeight + 30)
-        }
+    var body: some View {
+        MusicCurrentPlayer()
+            .frame(width: UIScreen.main.bounds.width - paddingWidth, height: viewHeight)
+            .overlay(RoundedRectangle(cornerRadius: 16).stroke(self.viewModel.accentColor, lineWidth: 4))
     }
 }
 

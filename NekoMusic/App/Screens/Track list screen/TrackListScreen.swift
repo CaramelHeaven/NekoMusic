@@ -32,44 +32,42 @@ struct TrackListScreen: View {
 
     func musicBody() -> some View {
         ZStack {
-            if !self.viewModel.tracks.isEmpty {
-                ZStack {
-                    NavigationView {
-                        VStack {
-                            List {
-                                ForEach(0..<viewModel.tracks.count, id: \.self) { index in
-                                    TrackRow(track: self.viewModel.tracks[index])
-                                }
+            ZStack {
+                NavigationView {
+                    VStack {
+                        List {
+                            ForEach(0..<viewModel.tracks.count, id: \.self) { index in
+                                TrackRow(track: self.viewModel.tracks[index])
                             }
-                            .padding(.top, 120)
-                            .offset(y: -120)
                         }
-                        .animation(.default)
-                        .navigationBarTitle("Music", displayMode: .inline)
-                        .navigationBarItems(trailing:
-                            HStack(spacing: 20) {
-//                                Button(action: {
-//                                    self.viewModel.load(isNeedSync: true)
-//                                }) {
-//                                    Image(systemName: "square.and.arrow.down")
-//                                        .imageScale(.large)
-//                                        .foregroundColor(self.viewModel.accentColor)
-//                                }
+                        Spacer()
 
-                                Button(action: {
-//                                    self.viewModel.uploadLocalPlaylistsToServer()
-                                }) {
-                                    Image(systemName: "square.and.arrow.up")
-                                        .imageScale(.large)
-                                        .foregroundColor(self.viewModel.accentColor)
-                                }
-                            }
-                        )
+                        BottomMusicControlView(height: 100)
                     }
-
-                    BottomMusicControlView(height: 100)
+                    .animation(.default)
+                    .navigationBarTitle("Music", displayMode: .inline)
+                    .navigationBarItems(trailing:
+                        HStack(spacing: 60) {
+                            Button(action: {
+                                self.viewModel.load(isSyncNeeded: true)
+                            }) {
+                                Image(systemName: "square.and.arrow.down")
+                                    .imageScale(.large)
+                                    .foregroundColor(self.viewModel.accentColor)
+                            }
+                            Button(action: {
+                                self.viewModel.locallyPush()
+                            }) {
+                                Image(systemName: "square.and.arrow.up")
+                                    .imageScale(.large)
+                                    .foregroundColor(self.viewModel.accentColor)
+                            }
+                        }
+                    )
                 }
-            } else {
+            }
+
+            if viewModel.isLoadingTracks {
                 SquareAlert()
             }
         }

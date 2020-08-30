@@ -19,6 +19,7 @@ final class TrackListViewModel: ObservableObject {
     @Published var currentTrack: Track?
     @Published var accentColor: Color = .white
     @Published var isError: Bool = false
+    @Published var isLoadingTracks: Bool = false
 
     private let knot: TrackListKnot
     private let music: MusicPlayer
@@ -100,27 +101,39 @@ fileprivate extension TrackListViewModel {
         tracks = cachedMainTracks ?? []
         isPlaylistEnable = false
     }
-}
-
-// MARK: - Knotting
-
-extension TrackListViewModel {
-    func load(isNeedSync: Bool = false) {
-        knot.userableTracks(isNeedSync).done { [weak self] tracks in
-            guard let self = self else { return }
-
-            self.tracks = tracks
-            self.cachedMainTracks = tracks
-        }.catch {
-            print("showUserTracks ER: \($0)")
-        }
-    }
 
     func addPlaylist(with tracks: [Track], playlistName: String) {
         reporter.send(.createPlaylist(DataPlaylist(name: playlistName, tracks: tracks)))
 
         selectedTracks.forEach { $0.isTrackSelected = false }
         selectedTracks.removeAll()
+    }
+}
+
+// MARK: - Knotting
+
+extension TrackListViewModel {
+    func load(isSyncNeeded: Bool = false) {
+        isLoadingTracks = true
+
+        knot.userableTracks(isSyncNeeded).done { [weak self] tracks in
+            guard let self = self else { return }
+
+            self.tracks = tracks
+            self.cachedMainTracks = tracks
+
+            self.isLoadingTracks = false
+        }.catch {
+            print("showUserTracks ER: \($0)")
+        }
+    }
+
+    func locallyPush() {
+        knot.locallyPush().done { _ in
+            print("Locally to remote pushed")
+        }.catch {
+            print("knot.upload().done ER: \($0)")
+        }
     }
 }
 

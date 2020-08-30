@@ -23,7 +23,7 @@ class DatabaseSynchronization {
         self.database = local
     }
 
-    func sync(direction: SyncDirection) {
+    func sync(_ direction: SyncDirection) -> Promise<Void> {
         firstly {
             Promise.value(direction)
         }.then { d -> Promise<Void> in
@@ -33,16 +33,12 @@ class DatabaseSynchronization {
             case .toRemote:
                 return self.locallyUpload()
             }
-        }.done { _ in
-            // print
-        }.catch { e in
-            print("ER: \(e)")
         }
     }
 
     private func remotelyDownload() -> Promise<Void> {
         firstly {
-            remote.remoteFile(fileName: "default.realm")
+            remote.remoteFile(fileName: Constants.dbName)
         }.then { response -> Promise<Void> in
             guard let realmFile = response.files.first else {
                 return Promise.value
@@ -58,7 +54,7 @@ class DatabaseSynchronization {
 
     private func locallyUpload() -> Promise<Void> {
         firstly {
-            when(fulfilled: database.disk.gettableFile(by: "default.realm"), remote.remoteFile(fileName: "default.realm"))
+            when(fulfilled: database.disk.gettableFile(by: Constants.dbName), remote.remoteFile(fileName: Constants.dbName))
         }.then { (localUrl, response) -> Promise<GoogleFile> in
             guard let localUrl = localUrl else {
                 throw NSError(domain: "Local Realm db is not existed", code: 0, userInfo: nil)

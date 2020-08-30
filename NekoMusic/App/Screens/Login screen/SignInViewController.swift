@@ -60,9 +60,6 @@ extension SignInViewController: GIDSignInDelegate {
             return
         }
 
-        diContainer.resolve(type: DatabaseSynchronization.self)
-            .sync(direction: .fromRemote)
-
         // Needed a delay 'cause GIDSignIn has a delay for closing own signIn controller I presume.
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(400)) {
             reporter.send(.coordinator(.files))

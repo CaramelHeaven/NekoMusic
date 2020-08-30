@@ -25,15 +25,19 @@ final class TrackListKnot {
     }
 
     func userableTracks(_ isSyncNeeded: Bool) -> Promise<[Track]> {
-        return firstly {
-            self.syncFromRemoteIfNeeded(isSyncNeeded)
+        firstly {
+            self.checkNewTracksIfNeeded(isSyncNeeded)
         }.then {
             self.tracks()
         }
     }
 
-    private func syncFromRemoteIfNeeded(_ isSyncNeeded: Bool) -> Promise<Void> {
-        guard isSyncNeeded || preferences.isAppFirstLaunched else {
+    func locallyPush() -> Promise<Void> {
+        databaseSync.sync(.toRemote)
+    }
+
+    private func checkNewTracksIfNeeded(_ isCheckNeeded: Bool) -> Promise<Void> {
+        guard isCheckNeeded || preferences.isAppFirstLaunched else {
             return Promise.value
         }
 
@@ -83,7 +87,7 @@ fileprivate extension TrackListKnot {
             }.then {
                 self.database.clearUnusedIfNeeded($0)
             }.then { _ in
-                Promise.value(self.databaseSync.sync(direction: .toRemote))
+                self.databaseSync.sync(.toRemote)
             }
         }
     }

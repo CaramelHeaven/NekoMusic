@@ -19,10 +19,17 @@ final class Database {
         self.disk = fileStorage
         self.preferences = preferences
 
-        let realmUrl = disk.gettableFile(name: "default.realm")
-        let config = realmUrl != nil ? Realm.Configuration(fileURL: realmUrl) : Realm.Configuration()
+        if let realmUrl = disk.gettableFile(name: Constants.dbName) {
+            Realm.Configuration.defaultConfiguration = Realm.Configuration(fileURL: realmUrl)
+        } else {
+            let conf = Realm.Configuration().fileURL?.deletingLastPathComponent().appendingPathComponent(Constants.dbName, isDirectory: false)
+            var config = Realm.Configuration()
+            config.fileURL = conf
 
-        self.realm = try? Realm(configuration: config)
+            Realm.Configuration.defaultConfiguration = config
+        }
+
+        self.realm = try? Realm(configuration: Realm.Configuration.defaultConfiguration)
     }
 
     func recreate(fileUrl: URL) -> Promise<Void> {

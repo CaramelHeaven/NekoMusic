@@ -52,7 +52,7 @@ final class GoogleDrive: UrlRequestable {
 
         let data = try! Data(contentsOf: fileUrl)
         let json: [String: String] = [
-            "name": "test.realm",
+            "name": Constants.dbName,
             "mimeType": "application/octet-stream",
         ]
 
@@ -83,16 +83,16 @@ final class GoogleDrive: UrlRequestable {
     ///   - fileId: google file id
     ///   - fileUrl: local file url
     func uploadableFile(by fileId: String, fileUrl: URL) -> Promise<GoogleFile> {
-        let urlStr = "https://www.googleapis.com/upload/drive/v3/files/?uploadType=multipart&upload_id=\(fileId)"
+        let urlStr = "https://www.googleapis.com/upload/drive/v3/files/\(fileId)?uploadType=multipart"
 
         let data = try! Data(contentsOf: fileUrl)
         let json: [String: String] = [
-            "name": "test.realm",
+            "name": Constants.dbName,
             "mimeType": "application/octet-stream",
         ]
 
         return firstly {
-            self.buildableMultipartUrl(by: urlStr, parameters: json, method: .post, data: data)
+            self.buildableMultipartUrl(by: urlStr, parameters: json, method: .patch, data: data)
         }.then {
             self.network.executableRequest(with: $0, decode: GoogleFile.self)
         }
